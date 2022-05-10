@@ -4,6 +4,119 @@
   
     
     <entry>
+      <title>Git推送到Github时出现OpenSSL SSL_read: Connection was reset, errno 10054错误解决方法</title>
+      <link href="/2022/05/10/git-tui-song-dao-github-shi-chu-xian-openssl-ssl-read-connection-was-reset-errno-10054-cuo-wu-jie-jue-fang-fa/"/>
+      <url>/2022/05/10/git-tui-song-dao-github-shi-chu-xian-openssl-ssl-read-connection-was-reset-errno-10054-cuo-wu-jie-jue-fang-fa/</url>
+      
+        <content type="html"><![CDATA[<p>突然想把学习写的项目代码放到Github上,也是好久没推送代码了，报了个fatal: unable to access ‘<a href="https://github.com/ZG-jian/Demo.git/&#39;">https://github.com/ZG-jian/Demo.git/&#39;</a>: OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</p><p><strong>找了一下解决方案：</strong></p><p>然后我是觉得我推的东西很多，就用的方法4，然后报错 Support for password authentication was removed on August 13, 2021. Please use a personal access token instead，解决完就成功推送了</p><p>方法1:自己配置的用户名邮箱可能输入错误了：</p><p>查看用户名，邮箱</p><pre class=" language-none"><code class="language-none">git config user.namegit config user.email</code></pre><p>修改用户名，邮箱：</p><pre class=" language-none"><code class="language-none">git config --global user.name "xxx"git config --global user.email"xxx"</code></pre><p>移除仓库，重新添加：</p><pre class=" language-none"><code class="language-none">git remote rm origingit remote add origin https://github.com/XXX</code></pre><p>方法2：移除本地代理：</p><pre class=" language-none"><code class="language-none">git config --global --unset-all remote.origin.proxy</code></pre><p> 方法3：修改解除<a href="https://so.csdn.net/so/search?q=SSL&spm=1001.2101.3001.7020">SSL</a>认证</p><pre class=" language-none"><code class="language-none">git config --global http.sslVerify "false"</code></pre><p>方法4：文件太大，修改缓冲区大小（缓冲区大小修改为500M）</p><pre class=" language-none"><code class="language-none">git config http.postBuffer 5242880003</code></pre><p>方法5：更新DNS缓存</p><pre class=" language-none"><code class="language-none">ipconfig /flushdns</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Other </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 小问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Git推送报错Support for password authentication was removed</title>
+      <link href="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/"/>
+      <url>/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/</url>
+      
+        <content type="html"><![CDATA[<p>​        好久没有往<a href="https://so.csdn.net/so/search?q=Github&spm=1001.2101.3001.7020">Github</a>提交代码了，今天偶然提交代码的时候给报了一个 Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.的错误</p><p>​        大概意思就是，你原先的密码凭证从2021年8月13日开始就不能用了，必须使用个人访问令牌（personal access token），就是把你的密码替换成token！</p><h2 id="为什么要把密码换成token"><a href="#为什么要把密码换成token" class="headerlink" title="为什么要把密码换成token"></a>为什么要把密码换成token</h2><p>​        <strong>下面是Github官方的解释：</strong> 近年来，GitHub 客户受益于 <a href="https://link.zhihu.com/?target=http://GitHub.com">http://GitHub.com</a> 的许多安全增强功能，例如双因素身份验证、登录警报、经过验证的设备、防止使用泄露密码和 WebAuthn 支持。 这些功能使攻击者更难获取在多个网站上重复使用的密码并使用它来尝试访问您的 GitHub 帐户。 尽管有这些改进，但由于历史原因，未启用双因素身份验证的客户仍能够仅使用其GitHub 用户名和密码继续对 Git 和 API 操作进行身份验证。</p><p>​        从 2021 年 8 月 13 日开始，我们将在对 Git 操作进行身份验证时不再接受帐户密码，并将要求使用基于令牌（token）的身份验证，例如个人访问令牌（针对开发人员）或 OAuth 或 GitHub 应用程序安装令牌（针对集成商） <a href="https://link.zhihu.com/?target=http://GitHub.com">http://GitHub.com</a> 上所有经过身份验证的 Git 操作。 您也可以继续在您喜欢的地方使用 SSH 密钥。如果你要使用ssh密钥可以参考<a href="https://link.csdn.net/?target=https://link.zhihu.com/?target=https%253A//cloud.tencent.com/developer/article/1861466">https://link.csdn.net/?target=https%3A%2F%2Flink.zhihu.com%2F%3Ftarget%3Dhttps%253A%2F%2Fcloud.tencent.com%2Fdeveloper%2Farticle%2F1861466</a></p><p><strong>修改为token的好处：</strong></p><p>​        令牌（token）与基于密码的身份验证相比，令牌提供了许多安全优势： - 唯一： 令牌特定于 GitHub，可以按使用或按设备生成 - 可撤销：可以随时单独撤销令牌，而无需更新未受影响的凭据 - 有限 ： 令牌可以缩小范围以仅允许用例所需的访问 - 随机：令牌不需要记住或定期输入的更简单密码可能会受到的字典类型或蛮力尝试的影响</p><h2 id="如何生成token"><a href="#如何生成token" class="headerlink" title="如何生成token"></a>如何生成token</h2><p>1，打开Github，在个人设置页面，找到【Setting】，然后打开找到【Devloper Settting】，如下图。</p><p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195245993.png" alt="image-20220510195245993"></p><p>然后，选择个人访问令牌【Personal access tokens】，然后选中生成令牌【Generate new token】。</p><p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195254365.png" alt="image-20220510195254365"></p><p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195258529.png" alt="image-20220510195258529"></p><p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195302153.png" alt="image-20220510195302153"></p><p>在上个步骤中，选择要授予此令牌token的范围或权限。</p><ul><li>要使用token从命令行访问仓库，请选择repo</li><li>要使用token从命令行删除仓库，请选择delete_repo</li><li>其他根据需要进行勾选</li></ul><p>然后，点击【Generate token】生成令牌。</p><p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195305372.png" alt="image-20220510195305372"></p><p>生成token后，记得把你的token保存下来，以便进行后面的操作。把token直接添加远程仓库链接中，这样就可以避免同一个仓库每次提交代码都要输入token了。</p><pre class=" language-none"><code class="language-none">git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git<your_token>：换成你自己得到的token<USERNAME>：是你自己github的用户名<REPO>：是你的仓库名称示例git remote set-url origin https://ghp_JKXAvm5QHR3yaqxxxxxxxx@github.com/ZG-jian/Demo.git</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Other </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 小问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL高版本配置</title>
+      <link href="/2022/05/10/mysql-gao-ban-ben-pei-zhi/"/>
+      <url>/2022/05/10/mysql-gao-ban-ben-pei-zhi/</url>
+      
+        <content type="html"><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>springboot+<a href="https://so.csdn.net/so/search?q=Mybatis&spm=1001.2101.3001.7020">Mybatis</a>+Mysql 在配置数据库连接的数据源信息时，不同版本的驱动配置不同，否则连接报错</p><h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><p>高本版的需要把驱动配置成：</p><pre class=" language-none"><code class="language-none">driver-class-name: com.mysql.cj.jdbc.Driver</code></pre><p>据我所知，5.8+的版本的mysql，驱动都应该配置这个驱动。</p><p>5.8以下的版本配置不变：</p><pre><code>driver-class-name: com.mysql.jdbc.Driver</code></pre><p>附上一个完整的连接信息：(mysql 8.0)</p><pre><code>spring:  datasource:    username: root    password: 123456    url: jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC    driver-class-name: com.mysql.cj.jdbc.Driver</code></pre><p>maven依赖：</p><pre><code>&lt;dependency&gt;      &lt;groupId&gt;mysql&lt;/groupId&gt;      &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;      &lt;version&gt;8.0.11&lt;/version&gt;  &lt;/dependency&gt;</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 小问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker没运行就拉取报错</title>
+      <link href="/2022/05/10/docker-mei-yun-xing-jiu-la-qu-bao-cuo/"/>
+      <url>/2022/05/10/docker-mei-yun-xing-jiu-la-qu-bao-cuo/</url>
+      
+        <content type="html"><![CDATA[<p>今天在重启服务器，然后查看镜像和pull的时候报错</p><p>Cannot connect to the Docker daemon at unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock. Is the docker daemon running?</p><p>翻译过来就是：无法连接到Docker守护进程在unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F; Docker .sock。docker守护进程正在运行吗?</p><p>这个主要的问题就是<a href="https://so.csdn.net/so/search?q=docker&spm=1001.2101.3001.7020">docker</a>没有启动起来导致的…</p><p>然后只要这样</p><pre class=" language-none"><code class="language-none">systemctl start dockersystemctl status docker</code></pre><p> 看到running的标志，就是运行成功了…</p><p>为了避免日后重启再次出现类似情况，增加一个开机自动启动docker…</p><p>systemctl enable docker</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 小问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用Navicat连接docker容器中的mysql报错10060：unknow error</title>
+      <link href="/2022/05/05/shi-yong-navicat-lian-jie-docker-rong-qi-zhong-de-mysql-bao-cuo-10060-unknow-error/"/>
+      <url>/2022/05/05/shi-yong-navicat-lian-jie-docker-rong-qi-zhong-de-mysql-bao-cuo-10060-unknow-error/</url>
+      
+        <content type="html"><![CDATA[<p>解决方案：</p><p>如果你确定不是防火墙什么的问题，而且你是<strong>挂起的虚拟机然后运行</strong>的话，你可以直接reboot重启虚拟机，然后会发现mysql容器就会停止运行，你再把它跑起来就可以正常运行了。</p><p>出了这个问题，你重启容器也是一样连接不上</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 小问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis笔记</title>
       <link href="/2022/04/25/redis-bi-ji/"/>
       <url>/2022/04/25/redis-bi-ji/</url>

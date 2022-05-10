@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Zookeeper笔记1, Jue-Blog">
-    <meta name="description" content="老zookeeper笔记,3.6.0">
+    <meta name="keywords" content="Git推送报错Support for password authentication was removed, Jue-Blog">
+    <meta name="description" content="把密码换成token">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Zookeeper笔记1 | Jue-Blog</title>
+    <title>Git推送报错Support for password authentication was removed | Jue-Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -234,12 +234,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Zookeeper笔记1</h1>
+                    <h1 class="description center-align post-title">Git推送报错Support for password authentication was removed</h1>
                 </div>
             </div>
         </div>
@@ -353,9 +353,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/">
+                                <span class="chip bg-color">小问题</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -363,8 +367,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" class="post-category">
-                                分布式
+                            <a href="/categories/Other/" class="post-category">
+                                Other
                             </a>
                         
                     </div>
@@ -376,28 +380,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-29
+                    2022-05-10
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-29
+                    2022-05-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.5k
+                    781
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    2 分
                 </div>
                 
 
@@ -422,289 +426,34 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <hr>
-<hr>
-<h5 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h5><p>笔记为技术入门学习，到时候再写一篇书籍《Zookeeper分布式过程协同技术详解的笔记》</p>
-<h3 id="一、-Zookeeper-简介"><a href="#一、-Zookeeper-简介" class="headerlink" title="一、 Zookeeper 简介"></a>一、 Zookeeper 简介</h3><h4 id="1-什么是-Zookeeper"><a href="#1-什么是-Zookeeper" class="headerlink" title="1 什么是 Zookeeper"></a>1 什么是 Zookeeper</h4><p>Zookeeper 是 Apache 的一个分布式服务框架，是 Apache Hadoop 的一个子项目。官方 文档上这么解释 Zookeeper，它主要是用来解决分布式应用中经常遇到的一些数据管理问题， 如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。 </p>
-<p><strong>简单来说 zookeeper&#x3D;文件系统+监听通知机制</strong></p>
-<h3 id="二、-Zookeeper-存储结构"><a href="#二、-Zookeeper-存储结构" class="headerlink" title="二、 Zookeeper 存储结构"></a>二、 Zookeeper 存储结构</h3><h4 id="1-Znode"><a href="#1-Znode" class="headerlink" title="1 Znode"></a><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220329120753191.png" alt="image-20220329120753191">1 Znode</h4><p>在 Zookeeper 中，znode 是一个跟 Unix 文件系统路径相似的节点，可以向节点存储数据或者获取数据。 </p>
-<p>Zookeeper 底层是一套数据结构。这个存储结构是一个树形结构，其上的每一个节点， 我们称之为“znode” </p>
-<p>Zookeeper 中的数据是按照“树”结构进行存储的。而且 znode 节点还分为 4 中不同的类型。 </p>
-<p>每一个 znode 默认能够存储 1MB 的数据（对于记录状态性质的数据来说，够了） </p>
-<p>可以使用 zkCli 命令，登录到 Zookeeper 上，并通过 ls、create、delete、get、set 等命令操作这些 znode 节点</p>
-<h4 id="2-Znode-节点类型"><a href="#2-Znode-节点类型" class="headerlink" title="2 Znode 节点类型"></a>2 Znode 节点类型</h4><h5 id="2-1-PERSISTENT-持久化目录节点"><a href="#2-1-PERSISTENT-持久化目录节点" class="headerlink" title="2.1 PERSISTENT-持久化目录节点"></a>2.1 PERSISTENT-持久化目录节点</h5><p>客户端与 zookeeper 断开连接后，该节点依旧存在。 </p>
-<h5 id="2-2-PERSISTENT-SEQUENTIAL-持久化顺序编号目录节点"><a href="#2-2-PERSISTENT-SEQUENTIAL-持久化顺序编号目录节点" class="headerlink" title="2.2 PERSISTENT_SEQUENTIAL-持久化顺序编号目录节点"></a>2.2 PERSISTENT_SEQUENTIAL-持久化顺序编号目录节点</h5><p>客户端与 zookeeper 断开连接后，该节点依旧存在，只是 Zookeeper 给该节点名称进行顺序编号。 </p>
-<h5 id="2-3-EPHEMERAL-临时目录节点"><a href="#2-3-EPHEMERAL-临时目录节点" class="headerlink" title="2.3 EPHEMERAL-临时目录节点"></a>2.3 EPHEMERAL-临时目录节点</h5><p>客户端与 zookeeper 断开连接后，该节点被删除。 </p>
-<h5 id="2-4-EPHEMERAL-SEQUENTIAL-临时顺序编号目录节点"><a href="#2-4-EPHEMERAL-SEQUENTIAL-临时顺序编号目录节点" class="headerlink" title="2.4 EPHEMERAL_SEQUENTIAL-临时顺序编号目录节点"></a>2.4 EPHEMERAL_SEQUENTIAL-临时顺序编号目录节点</h5><p>客户端与 zookeeper 断开连接后，该节点被删除，只是 Zookeeper 给该节点名称进行顺序编号。</p>
-<h3 id="三、-监听通知机制"><a href="#三、-监听通知机制" class="headerlink" title="三、 监听通知机制"></a>三、 监听通知机制</h3><p>Zookeeper 是使用观察者设计模式来设计的。当客户端注册监听它关心的目录节点时， 当目录节点发生变化（数据改变、被删除、子目录节点增加删除）时，Zookeeper 会通知客户端。</p>
-<h3 id="四、-安装-zookeeper"><a href="#四、-安装-zookeeper" class="headerlink" title="四、 安装 zookeeper"></a>四、 安装 zookeeper</h3><h4 id="1-安装单机版"><a href="#1-安装单机版" class="headerlink" title="1.安装单机版"></a>1.安装单机版</h4><p>首先先去创建一台虚拟机，然后安装一下JDK以及配置一个环境变量</p>
-<p>接着就是上传和解压zookeeper的压缩包</p>
-<h4 id="2-Zookeeper-目录结构"><a href="#2-Zookeeper-目录结构" class="headerlink" title="2.Zookeeper 目录结构"></a>2.Zookeeper 目录结构</h4><pre class=" language-none"><code class="language-none">1. bin：放置运行脚本和工具脚本，
-2. conf：zookeeper 默认读取配置的目录，里面会有默认的配置文件
-3. docs：zookeeper 相关的文档
-4. lib：zookeeper 核心的 jar
-5. logs：zookeeper 日志
-</code></pre>
-<h4 id="3-配置zookeeper"><a href="#3-配置zookeeper" class="headerlink" title="3.配置zookeeper"></a>3.配置zookeeper</h4><p>Zookeeper 在启动时默认的去 conf 目录下查找一个名称为 zoo.cfg 的配置文件。 在 zookeeper 应用目录中有子目录 conf。其中有配置文件模板：zoo_sample.cfg cp zoo_sample.cfg zoo.cfg。zookeeper 应用中的配置文件为 conf&#x2F;zoo.cfg。</p>
-<p>修改配置文件 zoo.cfg - 设置数据缓存路径</p>
-<p><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220329124124371.png" alt="image-20220329124124371"></p>
-<h4 id="4-启动-Zookeeper"><a href="#4-启动-Zookeeper" class="headerlink" title="4.启动 Zookeeper"></a>4.启动 Zookeeper</h4><p>默认加载配置文件：.&#x2F;zkServer.sh start：默认的会去 conf 目录下加载 zoo.cfg 配置文件。 </p>
-<p>指定加载配置文件：.&#x2F;zkServer.sh start <strong>配置文件的路径。</strong></p>
-<h4 id="5-停止zookeeper"><a href="#5-停止zookeeper" class="headerlink" title="5.停止zookeeper"></a>5.停止zookeeper</h4><pre class=" language-none"><code class="language-none">./zkServer.sh stop
-</code></pre>
-<h4 id="6-查看-Zookeeper-状态"><a href="#6-查看-Zookeeper-状态" class="headerlink" title="6.查看 Zookeeper 状态"></a>6.查看 Zookeeper 状态</h4><pre class=" language-none"><code class="language-none">./zkServer.sh status
-</code></pre>
-<h4 id="7-使用客户端连接单机版-Zookeepe"><a href="#7-使用客户端连接单机版-Zookeepe" class="headerlink" title="7.使用客户端连接单机版 Zookeepe"></a>7.使用客户端连接单机版 Zookeepe</h4><h5 id="7-1连接方式一"><a href="#7-1连接方式一" class="headerlink" title="7.1连接方式一"></a>7.1连接方式一</h5><p>bin&#x2F;zkCli.sh 默认连接地址为本机地址，默认连接端口为 2181</p>
-<h5 id="7-2连接方式二"><a href="#7-2连接方式二" class="headerlink" title="7.2连接方式二"></a>7.2连接方式二</h5><p>bin&#x2F;zkCli.sh -server ip:port 连接指定 IP 地址与端口</p>
-<h4 id="8-安装集群版"><a href="#8-安装集群版" class="headerlink" title="8.安装集群版"></a>8.安装集群版</h4><h5 id="8-1-Zookeeper-集群中的角色"><a href="#8-1-Zookeeper-集群中的角色" class="headerlink" title="8.1 Zookeeper 集群中的角色"></a>8.1 Zookeeper 集群中的角色</h5><p><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220329124655830.png" alt="image-20220329124655830"></p>
-<p>学习阶段在这里就搭建伪集群了</p>
-<p>应用部署位置是：192.168.233.130。客户端 监听端口分别为：2181、2182、2183。投票选举端口分别为 2881&#x2F;3881、2882&#x2F;3882、2883&#x2F;3883。 tar -zxf zookeeper-3.6.0.tar.gz </p>
-<p>将解压后的 Zookeeper 应用目录重命名，便于管理 mv zookeeper-3.6.0 zookeeper01</p>
-<h5 id="8-2提供数据缓存目录"><a href="#8-2提供数据缓存目录" class="headerlink" title="8.2提供数据缓存目录"></a>8.2提供数据缓存目录</h5><p>在 zookeeper01 应用目录中，创建 data 目录，用于缓存应用运行数据 cd zookeeper01 mkdir data</p>
-<h5 id="8-3复制应用"><a href="#8-3复制应用" class="headerlink" title="8.3复制应用"></a>8.3复制应用</h5><p>复制两份 Zookeeper 应用。用于模拟集群中的 3 个节点。 </p>
-<p>cp -r zookeeper01 zookeeper02 </p>
-<p>cp -r zookeeper01 zookeeper03</p>
-<h5 id="8-4-提供配置文件、设置数据缓存路径"><a href="#8-4-提供配置文件、设置数据缓存路径" class="headerlink" title="8.4 提供配置文件、设置数据缓存路径"></a>8.4 提供配置文件、设置数据缓存路径</h5><p>这个上面有，做相关修改就行</p>
-<h5 id="8-5提供应用唯一标识"><a href="#8-5提供应用唯一标识" class="headerlink" title="8.5提供应用唯一标识"></a>8.5提供应用唯一标识</h5><p>在 Zookeeper 集群中，每个节点需要一个唯一标识。这个唯一标识要求是自然数。且唯 一标识保存位置是：数据缓存目录(dataDir&#x3D;&#x2F;usr&#x2F;local&#x2F;zookeeper&#x2F;data)的 myid 文件中。其中“数据缓存目录”为配置文件 zoo.cfg 中的配置参数 </p>
-<p>在 data 目录中创建文件 myid ： touch myid </p>
-<p>为应用提供唯一标识。本环境中使用 1、2、3 作为每个节点的唯一标识。 </p>
-<p>vi myid </p>
-<p>简化方式为： echo [唯一标识] &gt;&gt; myid。 echo 命令为回声命令，系统会将命令发送的 数据返回。 ‘&gt;&gt;’为定位，代表系统回声数据指定发送到什么位置。 此命令代表系统回声数 据发送到 myid 文件中。 如果没有文件创建文件</p>
-<h5 id="8-6修改配置文件"><a href="#8-6修改配置文件" class="headerlink" title="8.6修改配置文件"></a>8.6修改配置文件</h5><p>vim zoo.cfg</p>
-<p>就是根据应用做对应的端口修改</p>
-<p>都设置好之后，查看状态，02leader，其他都是follower</p>
-<p><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220122204938380.png" alt="image-20220122204938380"></p>
-<h5 id="8-7编写一个启动，关闭集群脚本"><a href="#8-7编写一个启动，关闭集群脚本" class="headerlink" title="8.7编写一个启动，关闭集群脚本"></a>8.7编写一个启动，关闭集群脚本</h5><p>chmod 777 文件名  </p>
-<p>分配可读可写可执行权限</p>
-<p>启动</p>
-<pre class=" language-none"><code class="language-none">zookeeper01/bin/zkServer.sh start
-zookeeper02/bin/zkServer.sh start
-zookeeper03/bin/zkServer.sh start
-</code></pre>
-<p>关闭</p>
-<pre class=" language-none"><code class="language-none">zookeeper01/bin/zkServer.sh stop
-zookeeper02/bin/zkServer.sh stop
-zookeeper03/bin/zkServer.sh stop
-</code></pre>
-<h5 id="8-8连接集群"><a href="#8-8连接集群" class="headerlink" title="8.8连接集群"></a>8.8连接集群</h5><p>可以使用任何节点中的客户端工具连接集群中的任何节点。 .&#x2F;zkCli.sh -server 192.168.233.130:2183</p>
-<h3 id="五、-Zookeeper-常用命令"><a href="#五、-Zookeeper-常用命令" class="headerlink" title="五、 Zookeeper 常用命令"></a>五、 Zookeeper 常用命令</h3><h4 id="1-ls"><a href="#1-ls" class="headerlink" title="1 ls"></a>1 ls</h4><p>ls &#x2F;path 使用 ls 命令查看 zookeeper 中的内容。在 ZooKeeper 控制台客户端中，没有默认列表功 能，必须指定要列表资源的位置。 如： ls &#x2F; 或者 ls  &#x2F;path</p>
-<h4 id="2-create"><a href="#2-create" class="headerlink" title="2 create"></a>2 create</h4><p>create [-e] [-s] &#x2F;path [data]</p>
-<p>使用 create 命令创建一个新的 Znode。</p>
-<p>如： create &#x2F;test 123 创建一个&#x2F;test 节点，节点携带数据信息 123。 create -e &#x2F;test 123 创建一个临时节 点&#x2F;test，携带数据为 123，临时节点只在当前会话生命周期中有效，会话结束节点自动删除。</p>
-<p>create -s &#x2F;test 123 创建一个顺序节点&#x2F;test，携带数据 123，创建的顺序节点由 ZooKeeper 自 动为节点增加后缀信息，如-&#x2F;test00000001 等。-e 和-s 参数可以联合使用</p>
-<h4 id="3-get"><a href="#3-get" class="headerlink" title="3 get"></a>3 get</h4><p>get [-s] &#x2F;path</p>
-<p>get 命令获取 Znode 中的数据。</p>
-<p><strong>-s 查看 Znode 详细信息</strong></p>
-<p><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220329133741788.png" alt="image-20220329133741788"></p>
-<p>oldlu:存放的数据 </p>
-<p>cZxid:创建时 zxid(znode 每次改变时递增的事务 id) </p>
-<p>ctime:创建时间戳 </p>
-<p>mZxid:最近一次更近的 zxid </p>
-<p>mtime:最近一次更新的时间戳 </p>
-<p>pZxid:子节点的 zxid </p>
-<p>cversion:子节点更新次数 </p>
-<p>dataversion:节点数据更新次数 </p>
-<p>aclVersion:节点 ACL(授权信息)的更新次数 </p>
-<p>ephemeralOwner:如果该节点为 ephemeral 节点(临时，生命周期与 session 一样), ephemeralOwner 值表示与该节点绑定的 session id. 如果该节点不是 ephemeral 节点, ephemeralOwner 值为 0.</p>
-<p>dataLength:节点数据字节数 </p>
-<p>numChildren:子节点数量</p>
-<h4 id="4-set"><a href="#4-set" class="headerlink" title="4 set"></a>4 set</h4><p>set &#x2F;path [data] </p>
-<p>添加或修改 Znode 中的值</p>
-<h4 id="5-delete"><a href="#5-delete" class="headerlink" title="5 delete"></a>5 delete</h4><p>delete &#x2F;path </p>
-<p>删除 Znode。</p>
-<h3 id="六、-使用-Java-API-操作-Zooke"><a href="#六、-使用-Java-API-操作-Zooke" class="headerlink" title="六、 使用 Java API 操作 Zooke"></a>六、 使用 Java API 操作 Zooke</h3><p>创建项目，添加zookeeper依赖</p>
-<h4 id="1-创建Znode并添加数据"><a href="#1-创建Znode并添加数据" class="headerlink" title="1.创建Znode并添加数据"></a>1.创建Znode并添加数据</h4><pre class=" language-Java"><code class="language-Java">/**
- * 操作Zookeeper的Znode
- */
-public class ZnodeDemo implements Watcher &#123;
-    public static void main(String[] args) throws InterruptedException, KeeperException, IOException &#123;
-        //创建连接Zookeeper对象,这里用的三个参数构造方法
-        //第一个，连接的结点和端口，多个之间逗号隔开，
-        // sessionTimeOut：连接超时时间，   Watcher：事件通知处理器（回调）
-        ZooKeeper zooKeeper = new ZooKeeper(
-                "192.168.8.103:2181," +
-                "192.168.8.103:2182," +
-                "192.168.8.103:2183",15000,new ZnodeDemo() );
-       String path = zooKeeper.create("/bjsxt/test", "jianjian".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);//相当于create命令，四个参,路径，存放的值（字节数组），操作的权限，CreateMode（四种类型之一）
-//OpenACL,开放所有权限，create：创建权限，read：读取，还有一个anyoneID：对当前客户端开放所有权限
-        System.out.println(path);
+                <p>​        好久没有往<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Github&spm=1001.2101.3001.7020">Github</a>提交代码了，今天偶然提交代码的时候给报了一个 Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.的错误</p>
+<p>​        大概意思就是，你原先的密码凭证从2021年8月13日开始就不能用了，必须使用个人访问令牌（personal access token），就是把你的密码替换成token！</p>
+<h2 id="为什么要把密码换成token"><a href="#为什么要把密码换成token" class="headerlink" title="为什么要把密码换成token"></a>为什么要把密码换成token</h2><p>​        <strong>下面是Github官方的解释：</strong> 近年来，GitHub 客户受益于 <a href="https://link.zhihu.com/?target=http://GitHub.com">http://GitHub.com</a> 的许多安全增强功能，例如双因素身份验证、登录警报、经过验证的设备、防止使用泄露密码和 WebAuthn 支持。 这些功能使攻击者更难获取在多个网站上重复使用的密码并使用它来尝试访问您的 GitHub 帐户。 尽管有这些改进，但由于历史原因，未启用双因素身份验证的客户仍能够仅使用其GitHub 用户名和密码继续对 Git 和 API 操作进行身份验证。</p>
+<p>​        从 2021 年 8 月 13 日开始，我们将在对 Git 操作进行身份验证时不再接受帐户密码，并将要求使用基于令牌（token）的身份验证，例如个人访问令牌（针对开发人员）或 OAuth 或 GitHub 应用程序安装令牌（针对集成商） <a href="https://link.zhihu.com/?target=http://GitHub.com">http://GitHub.com</a> 上所有经过身份验证的 Git 操作。 您也可以继续在您喜欢的地方使用 SSH 密钥。如果你要使用ssh密钥可以参考<a href="https://link.csdn.net/?target=https://link.zhihu.com/?target=https%253A//cloud.tencent.com/developer/article/1861466">https://link.csdn.net/?target=https%3A%2F%2Flink.zhihu.com%2F%3Ftarget%3Dhttps%253A%2F%2Fcloud.tencent.com%2Fdeveloper%2Farticle%2F1861466</a></p>
+<p><strong>修改为token的好处：</strong></p>
+<p>​        令牌（token）与基于密码的身份验证相比，令牌提供了许多安全优势： - 唯一： 令牌特定于 GitHub，可以按使用或按设备生成 - 可撤销：可以随时单独撤销令牌，而无需更新未受影响的凭据 - 有限 ： 令牌可以缩小范围以仅允许用例所需的访问 - 随机：令牌不需要记住或定期输入的更简单密码可能会受到的字典类型或蛮力尝试的影响</p>
+<h2 id="如何生成token"><a href="#如何生成token" class="headerlink" title="如何生成token"></a>如何生成token</h2><p>1，打开Github，在个人设置页面，找到【Setting】，然后打开找到【Devloper Settting】，如下图。</p>
+<p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195245993.png" alt="image-20220510195245993"></p>
+<p>然后，选择个人访问令牌【Personal access tokens】，然后选中生成令牌【Generate new token】。</p>
+<p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195254365.png" alt="image-20220510195254365"></p>
+<p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195258529.png" alt="image-20220510195258529"></p>
+<p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195302153.png" alt="image-20220510195302153"></p>
+<p>在上个步骤中，选择要授予此令牌token的范围或权限。</p>
+<ul>
+<li>要使用token从命令行访问仓库，请选择repo</li>
+<li>要使用token从命令行删除仓库，请选择delete_repo</li>
+<li>其他根据需要进行勾选</li>
+</ul>
+<p>然后，点击【Generate token】生成令牌。</p>
+<p><img src="/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/Users/jianjian/blog/source/_posts/Git%E6%8E%A8%E9%80%81%E6%8A%A5%E9%94%99Support-for-password-authentication-was-removed/image-20220510195305372.png" alt="image-20220510195305372"></p>
+<p>生成token后，记得把你的token保存下来，以便进行后面的操作。把token直接添加远程仓库链接中，这样就可以避免同一个仓库每次提交代码都要输入token了。</p>
+<pre class=" language-none"><code class="language-none">git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
 
-    /**
-     * 事件通知回调方法
-     * @param event
-     */
-    @Override
-    public void process(WatchedEvent event) &#123;
-        //获取连接事件  返回值相等表示连接成功
-        if (event.getState() == Event.KeeperState.SaslAuthenticated)&#123;//.SyncConnected？？
-            System.out.println("连接成功！");
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<h4 id="2-获取Znode中的数据"><a href="#2-获取Znode中的数据" class="headerlink" title="2. 获取Znode中的数据"></a>2. 获取Znode中的数据</h4><h5 id="2-1获取指定节点中的数据"><a href="#2-1获取指定节点中的数据" class="headerlink" title="2.1获取指定节点中的数据"></a>2.1获取指定节点中的数据</h5><pre class=" language-java"><code class="language-java">  <span class="token comment" spellcheck="true">//获取指定结点的数据   路径  处理器  统计对象</span>
-        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data <span class="token operator">=</span> zooKeeper<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token string">"/bjsxt/test0000000000"</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">ZnodeDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Stat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        
-        <span class="token comment" spellcheck="true">//output:jianjian</span>
-</code></pre>
-<h5 id="2-2获取所有子节点中的数据"><a href="#2-2获取所有子节点中的数据" class="headerlink" title="2.2获取所有子节点中的数据"></a>2.2获取所有子节点中的数据</h5><pre class=" language-Java"><code class="language-Java">//获取指定节点中的所有子节点中的数据
-        List<String> list = zooKeeper.getChildren("/bjsxt", new ZnodeDemo());//子节点路径，Watcher
-        //list存放的是返回的所有子节点的路径
-        for (String path:list
-             ) &#123;
-            byte[] data = zooKeeper.getData("/bjsxt/" + path, new ZnodeDemo(), new Stat());
-            System.out.println(new String(data));
-        &#125;
-        //output:jianjian
-</code></pre>
-<h4 id="3-设置-Znode-中的值"><a href="#3-设置-Znode-中的值" class="headerlink" title="3 设置 Znode 中的值"></a>3 设置 Znode 中的值</h4><pre class=" language-java"><code class="language-java">
-        <span class="token comment" spellcheck="true">//设置Znode中的值   三个参   路径  设置的值  version：详细信息中的子节点更新次数</span>
-        <span class="token comment" spellcheck="true">//就是给定的版本号和当前的version不匹配，就不会修改   -1：任何版本都可以(匹配任何版本)</span>
-        Stat stat <span class="token operator">=</span> zooKeeper<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token string">"/bjsxt/test0000000000"</span><span class="token punctuation">,</span> <span class="token string">"juejue"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>stat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<h4 id="4-删除Znode"><a href="#4-删除Znode" class="headerlink" title="4.删除Znode"></a>4.删除Znode</h4><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//删除   路径，版本</span>
-        zooKeeper<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token string">"/bjsxt/test0000000000"</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<h3 id="七、-Zookeeper-实战"><a href="#七、-Zookeeper-实战" class="headerlink" title="七、 Zookeeper 实战"></a>七、 Zookeeper 实战</h3><p>实战案例介绍：使用 Zookeeper 与 RMI 技术实现一个 RPC 框架。</p>
-<p>RPC：（Remote Procedure Call）远程过程调用</p>
-<h4 id="1-基于-RMI-实现远程方法调用"><a href="#1-基于-RMI-实现远程方法调用" class="headerlink" title="1 基于 RMI 实现远程方法调用"></a>1 基于 RMI 实现远程方法调用</h4><h5 id="1-1RMI-简-介"><a href="#1-1RMI-简-介" class="headerlink" title="1.1RMI 简 介"></a>1.1RMI 简 介</h5><p>RMI(Remote Method Invocation) 远程方法调用。 RMI 是从 JDK1.2 推出的功能，它可以实现在一个 Java 应用中可以像调用本地方法一样 调用另一个服务器中 Java 应用（JVM）中的内容。 RMI 是 Java 语言的远程调用，无法实现跨语言</p>
-<h5 id="1-2执行流程"><a href="#1-2执行流程" class="headerlink" title="1.2执行流程"></a>1.2执行流程</h5><p><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220329140808122.png" alt="image-20220329140808122"></p>
-<p>Registry(注册表)是放置所有服务器对象的命名空间。 每次服务端创建一个对象时，它都会使用 bind()或 rebind()方法注册该对象。 这些是使用称为绑定名称的唯一名称注册的。 </p>
-<p>要调用远程对象，客户端需要该对象的引用。即通过服务端绑定的名称从注册表中获取 对象(lookup()方法)。</p>
-<h5 id="1-3RMI-的-API-介绍"><a href="#1-3RMI-的-API-介绍" class="headerlink" title="1.3RMI 的 API 介绍"></a>1.3RMI 的 API 介绍</h5><h6 id="1-3-1-Remote-接口"><a href="#1-3-1-Remote-接口" class="headerlink" title="1.3.1 Remote 接口"></a>1.3.1 Remote 接口</h6><p>java.rmi.Remote 定义了此接口为远程调用接口。如果接口被外部调用，需要继承此接口。</p>
-<h6 id="1-3-2-RemoteException-类"><a href="#1-3-2-RemoteException-类" class="headerlink" title="1.3.2 RemoteException 类"></a>1.3.2 RemoteException 类</h6><p>java.rmi.RemoteException </p>
-<p>继承了 Remote 接口的接口，如果方法是允许被远程调用的，需要抛出此异常。</p>
-<h6 id="1-3-3-UnicastRemoteObject-类"><a href="#1-3-3-UnicastRemoteObject-类" class="headerlink" title="1.3.3 UnicastRemoteObject 类"></a>1.3.3 UnicastRemoteObject 类</h6><p>java.rmi.server.UnicastRemoteObject </p>
-<p>此类实现了 Remote 接口和 Serializable 接口</p>
-<p><strong>自定义接口实现类除了实现自定义接口还需要继承此类。</strong></p>
-<h6 id="1-3-4-LocateRegistry-类"><a href="#1-3-4-LocateRegistry-类" class="headerlink" title="1.3.4 LocateRegistry 类"></a>1.3.4 LocateRegistry 类</h6><p>java.rmi.registry.LocateRegistry </p>
-<p>可以通过 LocateRegistry 在本机上创建 Registry，通过特定的端口就可以访问这个 Registry。</p>
-<h6 id="1-3-5-Naming-类"><a href="#1-3-5-Naming-类" class="headerlink" title="1.3.5 Naming 类"></a>1.3.5 Naming 类</h6><p>java.rmi.Naming </p>
-<p>Naming 定义了发布内容可访问 RMI 名称。也是通过 Naming 获取到指定的远程方法</p>
-<h5 id="1-4创建-Server"><a href="#1-4创建-Server" class="headerlink" title="1.4创建 Server"></a>1.4创建 Server</h5><h6 id="1-4-1创建项目"><a href="#1-4-1创建项目" class="headerlink" title="1.4.1创建项目"></a>1.4.1创建项目</h6><p><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220329150012005.png" alt="image-20220329150012005"></p>
-<h6 id="1-4-2创建接口"><a href="#1-4-2创建接口" class="headerlink" title="1.4.2创建接口"></a>1.4.2创建接口</h6><pre class=" language-Java"><code class="language-Java">/**
- *  定义允许远程调用接口，该接口必须要继承Remote接口
- *  允许被远程调用的方法必须要抛出RemoteException
- */
-public interface DemoService extends Remote &#123;
-    String demo(String str) throws RemoteException;
-&#125;
-</code></pre>
-<h6 id="1-4-3创建接口实现类"><a href="#1-4-3创建接口实现类" class="headerlink" title="1.4.3创建接口实现类"></a>1.4.3创建接口实现类</h6><pre class=" language-Java"><code class="language-Java">/**
- * 接口实现类必须要继承UnicastRemoteObject
- * 会自动添加构造方法，需要修改为public
- */
-public class DemoServiceImpl extends UnicastRemoteObject implements DemoService &#123;
-
-    public DemoServiceImpl() throws RemoteException &#123;
-    &#125;
-
-    @Override
-    public String demo(String str) throws RemoteException &#123;
-        return "Hello RMI"+str;
-    &#125;
-&#125;
-</code></pre>
-<h6 id="1-4-4-编写主方法"><a href="#1-4-4-编写主方法" class="headerlink" title="1.4.4 编写主方法"></a>1.4.4 编写主方法</h6><pre class=" language-Java"><code class="language-Java">public class DemoServer &#123;
-    public static void main(String[] args) throws RemoteException, MalformedURLException, AlreadyBoundException &#123;
-        //将对象实例化
-        DemoService demoService = new DemoServiceImpl();
-        //创建本地注册表--给定别人访问注册表的端口
-        LocateRegistry.createRegistry(8888);
-        //将对象绑定到注册表当中   第一个参：查找对象使用rmi协议,最后必须要给绑定对象的唯一标识（注册表中不能有重复）
-        //第二个是绑定的对象    如果是别的机器，换localhost就可以了
-        Naming.bind("rmi://localhost:8888/demoService",demoService);
-
-    &#125;
-&#125;
-</code></pre>
-<h5 id="1-5创建Client端"><a href="#1-5创建Client端" class="headerlink" title="1.5创建Client端"></a>1.5创建Client端</h5><h6 id="1-5-1创建项目"><a href="#1-5-1创建项目" class="headerlink" title="1.5.1创建项目"></a>1.5.1创建项目</h6><p><img src="/2022/03/29/zookeeper-bi-ji-1/image-20220329150249119.png" alt="image-20220329150249119"></p>
-<h6 id="1-5-2复制服务端接口"><a href="#1-5-2复制服务端接口" class="headerlink" title="1.5.2复制服务端接口"></a>1.5.2复制服务端接口</h6><h6 id="1-5-3-创建主方法"><a href="#1-5-3-创建主方法" class="headerlink" title="1.5.3 创建主方法"></a>1.5.3 创建主方法</h6><pre class=" language-Java"><code class="language-Java">public class ClientDemo &#123;
-    public static void main(String[] args) throws MalformedURLException, NotBoundException, RemoteException &#123;
-        //把server中绑定的uri给过来，这样就能去注册表里找这个对象
-        DemoService demoService = (DemoService) Naming.lookup("rmi://localhost:8888/demoService");
-        String result = demoService.demo("JianJian");
-        System.out.println(result);
-    &#125;
-&#125;
-</code></pre>
-<p>这就完事了</p>
-<h4 id="2-使用-Zookeeper-作为注册中心"><a href="#2-使用-Zookeeper-作为注册中心" class="headerlink" title="2. 使用 Zookeeper 作为注册中心"></a>2. 使用 Zookeeper 作为注册中心</h4><h5 id="2-1-创建服务端"><a href="#2-1-创建服务端" class="headerlink" title="2.1 创建服务端"></a>2.1 创建服务端</h5><p>创建项目</p>
-<h6 id="2-1-1-修改POM文件依赖"><a href="#2-1-1-修改POM文件依赖" class="headerlink" title="2.1.1 修改POM文件依赖"></a>2.1.1 修改POM文件依赖</h6><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.zookeeper<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>zookeeper<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.6.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-</code></pre>
-<h6 id="2-1-2创建接口"><a href="#2-1-2创建接口" class="headerlink" title="2.1.2创建接口"></a>2.1.2创建接口</h6><pre class=" language-Java"><code class="language-Java">public interface UsersService extends Remote &#123;
-    String findUsers(String str) throws RemoteException;
-&#125;
-</code></pre>
-<h6 id="2-1-3-创建接口实现类"><a href="#2-1-3-创建接口实现类" class="headerlink" title="2.1. 3 创建接口实现类"></a>2.1. 3 创建接口实现类</h6><pre class=" language-Java"><code class="language-Java">public class UsersServiceImpl extends UnicastRemoteObject implements UsersService &#123;
-    public UsersServiceImpl() throws RemoteException &#123;
-    &#125;
-
-    @Override
-    public String findUsers(String str) throws RemoteException &#123;
-        return "Hello Zookeeper"+str;
-    &#125;
-&#125;
-</code></pre>
-<h6 id="2-1-4-编写主方法"><a href="#2-1-4-编写主方法" class="headerlink" title="2.1.4  编写主方法"></a>2.1.4  编写主方法</h6><pre class=" language-Java"><code class="language-Java">public class ServerDemo implements Watcher &#123;
-    public static void main(String[] args) throws IOException, AlreadyBoundException, InterruptedException, KeeperException &#123;
-        UsersService usersService = new UsersServiceImpl();
-        LocateRegistry.createRegistry(8888);
-        String str = "rmi://localhost:8888/user";
-        Naming.bind(str,usersService);
-
-        //将url信息放到zookeeper节点
-        ZooKeeper zooKeeper = new ZooKeeper(
-                "192.168.8.103:2181," +
-                        "192.168.8.103:2182," +
-                        "192.168.8.103:2183",15000,new ServerDemo() );
-        //创建Znode
-        zooKeeper.create("/bjsxt/service",str.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-        System.out.println("服务发布成功");
-    &#125;
-
-    @Override
-    public void process(WatchedEvent event) &#123;
-        //获取连接事件  返回值相等表示连接成功
-        if (event.getState() == Event.KeeperState.SyncConnected)&#123;
-            System.out.println("连接成功！");
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<h5 id="2-2-创建客户端"><a href="#2-2-创建客户端" class="headerlink" title="2.2 创建客户端"></a>2.2 创建客户端</h5><p>依赖</p>
-<h6 id="2-2-1-创建接口"><a href="#2-2-1-创建接口" class="headerlink" title="2.2.1 创建接口"></a>2.2.1 创建接口</h6><pre class=" language-Java"><code class="language-Java">public interface UsersService&#123;
-    String findUsers(String str);
-&#125;
-</code></pre>
-<h6 id="2-2-2-编写主方法"><a href="#2-2-2-编写主方法" class="headerlink" title="2.2.2 编写主方法"></a>2.2.2 编写主方法</h6><pre class=" language-Java"><code class="language-Java">public class ClientDemo implements Watcher &#123;
-    public static void main(String[] args) throws IOException, InterruptedException, KeeperException, NotBoundException &#123;
-        ZooKeeper zooKeeper = new ZooKeeper(
-                "192.168.8.103:2181," +
-                        "192.168.8.103:2182," +
-                        "192.168.8.103:2183",15000,new ClientDemo() );
-        byte[] data = zooKeeper.getData("/bjsxt/service", new ClientDemo(),null);
-        String url = new String(data);
-        //通过lookup
-      UsersService usersService = (UsersService) Naming.lookup(url);
-      String result = usersService.findUsers("JianJian");
-      System.out.println(result);
-
-    &#125;
-
-    @Override
-    public void process(WatchedEvent event) &#123;
-        if (event.getState() == Event.KeeperState.SyncConnected)&#123;
-            System.out.println("连接成功！");
-        &#125;
-    &#125;
-&#125;
+<your_token>：换成你自己得到的token
+<USERNAME>：是你自己github的用户名
+<REPO>：是你的仓库名称
+示例
+git remote set-url origin https://ghp_JKXAvm5QHR3yaqxxxxxxxx@github.com/ZG-jian/Demo.git
 </code></pre>
 
                 
@@ -732,7 +481,7 @@ public class DemoServiceImpl extends UnicastRemoteObject implements DemoService 
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://zg-jian.github.io/2022/03/29/zookeeper-bi-ji-1/">http://zg-jian.github.io/2022/03/29/zookeeper-bi-ji-1/</a>
+                    <a href="http://zg-jian.github.io/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/">http://zg-jian.github.io/2022/05/10/git-tui-song-bao-cuo-support-for-password-authentication-was-removed/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -769,7 +518,11 @@ public class DemoServiceImpl extends UnicastRemoteObject implements DemoService 
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/">
+                                    <span class="chip bg-color">小问题</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -1085,36 +838,44 @@ public class DemoServiceImpl extends UnicastRemoteObject implements DemoService 
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/01/zookeeper-bi-ji-2/">
+                <a href="/2022/05/10/git-tui-song-dao-github-shi-chu-xian-openssl-ssl-read-connection-was-reset-errno-10054-cuo-wu-jie-jue-fang-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Zookeeper笔记2">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Git推送到Github时出现OpenSSL SSL_read: Connection was reset, errno 10054错误解决方法">
                         
-                        <span class="card-title">Zookeeper笔记2</span>
+                        <span class="card-title">Git推送到Github时出现OpenSSL SSL_read: Connection was reset, errno 10054错误解决方法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            另一份Zookeeper笔记
+                            5个办法
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-10
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" class="post-category">
-                                    分布式
+                            <a href="/categories/Other/" class="post-category">
+                                    Other
                                 </a>
                             
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/">
+                        <span class="chip bg-color">小问题</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1126,36 +887,40 @@ public class DemoServiceImpl extends UnicastRemoteObject implements DemoService 
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/03/28/maven-bu-neng-dao-ru-yi-lai/">
+                <a href="/2022/05/10/mysql-gao-ban-ben-pei-zhi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Maven不能导入依赖">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="MySQL高版本配置">
                         
-                        <span class="card-title">Maven不能导入依赖</span>
+                        <span class="card-title">MySQL高版本配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            dependencyManagement与dependencies的区别
+                            配置高版本MySQL数据源
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-10
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Maven/" class="post-category">
-                                    Maven
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            JueJue
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%B0%8F%E9%97%AE%E9%A2%98/">
+                        <span class="chip bg-color">小问题</span>
+                    </a>
+                    
                 </div>
                 
             </div>
