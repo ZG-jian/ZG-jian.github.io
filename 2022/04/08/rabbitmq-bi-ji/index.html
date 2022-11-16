@@ -1,0 +1,2368 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="RabbitMQ笔记, Jue-Blog">
+    <meta name="description" content="RabbitMQ学习">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>RabbitMQ笔记 | Jue-Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+   <style>
+    body{
+       background-image: url(/medias/featureimages/bg.jpg);
+       background-repeat:no-repeat;
+       background-size: 100% 100%;
+       background-attachment:fixed;
+    }
+</style>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Jue-Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Jue-Blog</div>
+        <div class="logo-desc">
+            
+            Just do it！
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">RabbitMQ笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
+                                中间件
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-04-08
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-04-09
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    9.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    37 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><h4 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h4><p> MQ全称Message Queue（消息队列），是在消息的传输过程中保存消息的容器。多用于系统之间的异步通信。</p>
+<h4 id="MQ的优势"><a href="#MQ的优势" class="headerlink" title="MQ的优势"></a>MQ的优势</h4><h5 id="应用解耦"><a href="#应用解耦" class="headerlink" title="应用解耦"></a>应用解耦</h5><p>在电商平台中，用户下订单需要调用订单系统，此时订单系统还需 要调用库存系统、支付系统、物流系统完成业务。此时会产生两个问题：</p>
+<p>1 如果库存系统出现故障，会造成整个订单系统崩溃。 </p>
+<p>2 如果需求修改，新增了一个X系统，此时必须修改订单系统的代码。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408103539142.png" alt="image-20220408103539142"></p>
+<p>如果在系统中引入MQ，即订单系统将消息先发送到MQ中，MQ再转发到其他系统，则会解决以下问题：</p>
+<p>1 由于订单系统只发消息给MQ，不直接对接其他系统，如果库存系统出现故障，不影响整个订单。</p>
+<p>2 如果需求修改，新增了一个X系统，此时无需修改订单系统的代码，只需修改MQ将消息发送给X系统即可。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408103642727.png" alt="image-20220408103642727"></p>
+<h5 id="异步提速"><a href="#异步提速" class="headerlink" title="异步提速"></a>异步提速</h5><p>如果订单系统同步访问每个系统，则用户下单等待时长如下：</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408103357196.png" alt="image-20220408103357196"></p>
+<p>如果引入MQ，则用户下单等待时长如下：</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408103413238.png" alt="image-20220408103413238"></p>
+<h5 id="削峰填谷"><a href="#削峰填谷" class="headerlink" title="削峰填谷"></a>削峰填谷</h5><p>假设我们的系统每秒只能承载1000请求，如果请求瞬间增多到每秒 5000，则会造成系统崩溃。此时引入mq即可解决该问题</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408103429479.png" alt="image-20220408103429479"></p>
+<p>使用了MQ之后，限制消费消息的速度为1000，这样一来，高峰期 产生的数据势必会被积压在MQ中，高峰就被“削”掉了，但是因为消 息积压，在高峰期过后的一段时间内，消费消息的速度还是会维持在1000，直到消费完积压的消息，这就叫做“填谷”。</p>
+<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><h5 id="短时间内需要处理大量请求"><a href="#短时间内需要处理大量请求" class="headerlink" title="短时间内需要处理大量请求"></a>短时间内需要处理大量请求</h5><p>如果直接连接系统处理业务，会耗费大量资源，有可能造成系统瘫痪。</p>
+<p>如：秒杀，抢红包，抢火车票</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408104625502.png" alt="image-20220408104625502"></p>
+<p>而使用MQ后，可以先让用户将请求发送到MQ中，MQ会先保存 请求消息，不会占用系统资源，且MQ会进行消息排序，先请求 的秒杀成功，后请求的秒杀失败。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408104612270.png" alt="image-20220408104612270"></p>
+<h5 id="消息分发"><a href="#消息分发" class="headerlink" title="消息分发"></a>消息分发</h5><p>如电商网站要推送促销信息，该业务耗费时间较多，但对时效性 要求不高，可以使用MQ做消息分发。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408104655872.png" alt="image-20220408104655872"></p>
+<h5 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h5><p>假如我们需要将数据保存到数据库之外，还需要一段时间将数据同步到缓存（如Redis）、搜索引擎（如Elasticsearch）中。此 时可以将数据库的数据作为消息发送到MQ中，并同步到缓存、 搜索引擎中。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408104712580.png" alt="image-20220408104712580"></p>
+<h5 id="异步处理"><a href="#异步处理" class="headerlink" title="异步处理"></a>异步处理</h5><p>在电商系统中，订单完成后，需要及时的通知子系统（进销存系 统发货，用户服务积分，发送短信）进行下一步操作。为了保证 订单系统的高性能，应该直接返回订单结果，之后让MQ通知子 系统做其他非实时的业务操作。这样能保证核心业务的高效及时。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408104744539.png" alt="image-20220408104744539"></p>
+<h5 id="离线处理"><a href="#离线处理" class="headerlink" title="离线处理"></a>离线处理</h5><p>在银行系统中，如果要查询近十年的历史账单，这是非常耗时的操作。如果发送同步请求，则会花费大量时间等待响应。此时使用MQ发送异步请求，等到查询出结果后获取结果即可。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408104814969.png" alt="image-20220408104814969"></p>
+<h4 id="AMQP"><a href="#AMQP" class="headerlink" title="AMQP"></a>AMQP</h4><p>高级消息队列协议</p>
+<p>RabbitMQ是由Erlang语言编写的基于AMQP的MQ产品。</p>
+<p>MQ的标准非常简单</p>
+<p>就是放一个容器，容器中可以存一个单向队列，FIFO策略，接着就是一个发送者，把消息发送到队列里，不管使用什么办法。</p>
+<p>另外一端就是consumer消费者，拿消息，运行之后不管主动还是被动的从队列中把消息拿出来。处理掉就可以</p>
+<p>就是保证这三个角色传递消息了，他就是MQ标准</p>
+<p>AMQP中多了一个<strong>交换器</strong>，对于发送消息的人来说，它不需要知道队列是什么，知道交换器就可以，就是发消息发到交换器</p>
+<p>那对于consumer来说就只需要知道自己的队列就行</p>
+<p>其实真正的开发过程中，consumer还是要指定一下交换器的位置的</p>
+<p>基于erlang，这个语言开发出来的产品，有几个特性，特别适合处理<strong>高并发</strong>，</p>
+<p>处理高并发的时候服务器的<strong>吞吐量</strong>也是特别大的</p>
+<p>然后就是对于<strong>多线程</strong>的处理也是特别好,这就是erlang这个语种开发的特点。</p>
+<h5 id="AMQP工作过程"><a href="#AMQP工作过程" class="headerlink" title="AMQP工作过程"></a>AMQP工作过程</h5><p>生产者(Publisher)将消息发布到交换机(Exchange)，交换机根据规 则将消息分发给交换机绑定的队列(Queue)，队列再将消息投递给 订阅了此队列的消费者。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408105734730.png" alt="image-20220408105734730"></p>
+<h4 id="RabbitMQ工作原理"><a href="#RabbitMQ工作原理" class="headerlink" title="RabbitMQ工作原理"></a>RabbitMQ工作原理</h4><p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408105836497.png" alt="image-20220408105836497"></p>
+<h5 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h5><p>消息的生产者。也是一个向交换机发布消息的客户端应用程序。 </p>
+<h5 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h5><p>连接。生产者&#x2F;消费者和RabbitMQ服务器之间建立的TCP连接。 </p>
+<h5 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h5><p>信道。是TCP里面的虚拟连接。例如：Connection相当于电缆， Channel相当于独立光纤束，一条TCP连接中可以创建多条信 道，增加连接效率。无论是发布消息、接收消息、订阅队列都是通过信道完成的。 </p>
+<h5 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h5><p>消息队列服务器实体。即RabbitMQ服务器 </p>
+<h5 id="Virtual-host"><a href="#Virtual-host" class="headerlink" title="Virtual host"></a>Virtual host</h5><p>虚拟主机。出于多租户和安全因素设计的，把AMQP的基本组件 划分到一个虚拟的分组中。每个vhost本质上就是一个mini版的 RabbitMQ服务器，拥有自己的队列、交换机、绑定和权限机 制。当多个不同的用户使用同一个RabbitMQ服务器时，可以划分出多个虚拟主机。RabbitMQ默认的虚拟主机路径是 &#x2F; </p>
+<h5 id="Exchange"><a href="#Exchange" class="headerlink" title="Exchange"></a>Exchange</h5><p>交换机。用来接收生产者发送的消息，并根据分发规则，将这些消息分发给服务器中的队列中。不同的交换机有不同的分发规 则。 </p>
+<h5 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h5><p>消息队列。用来保存消息直到发送给消费者。它是消息的容器， 也是消息的终点。消息一直在队列里面，等待消费者链接到这个 队列将其取走。 </p>
+<h5 id="Binding"><a href="#Binding" class="headerlink" title="Binding"></a>Binding</h5><p>消息队列和交换机之间的虚拟连接，绑定中包含路由规则，绑定信息保存到交换机的路由表中，作为消息的分发依据。 </p>
+<h5 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h5><p>消息的消费者。表示一个从消息队列中取得消息的客户端应用程序。</p>
+<h4 id="安装Erlang"><a href="#安装Erlang" class="headerlink" title="安装Erlang"></a>安装Erlang</h4><p>1.安装<em><strong>epel</strong></em>源</p>
+<pre class=" language-none"><code class="language-none">yum install -y epel-release
+</code></pre>
+<p>2.添加存储库条目</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">wget</span> https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm
+rpm -Uvh erlang-solutions-1.0-1.noarch.rpm
+
+//报错-bash: wget: 未找到命令
+然后去安装一下wget
+yum <span class="token function">install</span> -y <span class="token function">wget</span>
+再走一遍
+</code></pre>
+<p>3.安装erlang</p>
+<pre class=" language-bash"><code class="language-bash">yum <span class="token function">install</span> -y erlang
+</code></pre>
+<p>4.验证安装是否成功</p>
+<p><strong>erl -version</strong></p>
+<h4 id="安装RabbitMQ–解压安装"><a href="#安装RabbitMQ–解压安装" class="headerlink" title="安装RabbitMQ–解压安装"></a>安装RabbitMQ–解压安装</h4><p>1.为了外部能够正常访问RabbitMQ服务，先关闭防火墙</p>
+<h5 id><a href="#" class="headerlink" title></a></h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 关闭运行的防火墙</span>
+systemctl stop firewalld.service
+<span class="token comment" spellcheck="true"># 禁止防火墙自启动</span>
+systemctl disable firewalld.service
+</code></pre>
+<h5 id="2-RabbitMQ是通过主机名进行访问的，必须给服务器添加主机名"><a href="#2-RabbitMQ是通过主机名进行访问的，必须给服务器添加主机名" class="headerlink" title="2.RabbitMQ是通过主机名进行访问的，必须给服务器添加主机名"></a>2.RabbitMQ是通过主机名进行访问的，必须给服务器添加主机名</h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 修改文件</span>
+vim /etc/sysconfig/network
+<span class="token comment" spellcheck="true"># 添加如下内容</span>
+NETWORKING<span class="token operator">=</span>yes
+HOSTNAME<span class="token operator">=</span>juejue
+<span class="token comment" spellcheck="true"># 修改文件</span>
+vim /etc/hosts
+<span class="token comment" spellcheck="true"># 添加如下内容</span>
+服务器ip juejue
+</code></pre>
+<h5 id="3-使用rz命令上传RabbitMQ压缩文件"><a href="#3-使用rz命令上传RabbitMQ压缩文件" class="headerlink" title="3 使用rz命令上传RabbitMQ压缩文件"></a>3 使用rz命令上传RabbitMQ压缩文件</h5><h5 id="4-安装RabbitMQ"><a href="#4-安装RabbitMQ" class="headerlink" title="4 安装RabbitMQ"></a>4 安装RabbitMQ</h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 解压RabbitMQ</span>
+<span class="token function">tar</span> xf rabbitmq-server-generic-unix-3.9.13.tar.xz
+
+<span class="token comment" spellcheck="true"># 重命名：</span>
+<span class="token function">mv</span> rabbitmq_server-3.9.13 rabbitmq
+
+<span class="token comment" spellcheck="true"># 移动文件夹：</span>
+<span class="token function">mv</span> rabbitmq /usr/local/
+</code></pre>
+<h5 id="5-配置环境变量"><a href="#5-配置环境变量" class="headerlink" title="5  配置环境变量"></a>5  配置环境变量</h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 编辑/etc/profile文件</span>
+vim /etc/profile
+<span class="token comment" spellcheck="true">#添加如下内容</span>
+<span class="token function">export</span> PATH<span class="token operator">=</span><span class="token variable">$PATH</span>:/usr/local/rabbitmq/sbin
+<span class="token comment" spellcheck="true"># 运行文件，让修改内容生效</span>
+<span class="token function">source</span> /etc/profile
+</code></pre>
+<h5 id="6-开启管控台插件"><a href="#6-开启管控台插件" class="headerlink" title="6 开启管控台插件"></a>6 开启管控台插件</h5><pre class=" language-bash"><code class="language-bash">rabbitmq-plugins <span class="token function">enable</span> rabbitmq_management
+</code></pre>
+<p>就是rabbitMQ自带的一个控制台插件，我们可以通过浏览器访问控制台，通过控制台来管理队列、消息、交换机等等</p>
+<h5 id="7-后台运行"><a href="#7-后台运行" class="headerlink" title="7 后台运行"></a>7 后台运行</h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#启动rabbitmq</span>
+rabbitmq-server -detached
+<span class="token comment" spellcheck="true">#停止rabbitmq</span>
+rabbitmqctl stop    
+</code></pre>
+<h5 id="8-通过管控台访问RabbitMQ"><a href="#8-通过管控台访问RabbitMQ" class="headerlink" title="8 通过管控台访问RabbitMQ"></a>8 通过管控台访问RabbitMQ</h5><p>路径： <a target="_blank" rel="noopener" href="http://ip地址:15672/">http://ip地址:15672</a> ，用户名： guest ，密码： guest</p>
+<p>rabbitMQ默认占用的端口号是5672，但是不是直接访问，而是访问它的管控台插件，管控台插件占用的是15672</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408130202366.png" alt="image-20220408130202366"></p>
+<p>但是你会发现登录不了，因为这个现在是远程访问，默认不让远程使用管理员访问</p>
+<p>就有两种解决办法，一是让管理员可以远程访问，二是再创建一个用户</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408130215521.png" alt="image-20220408130215521"></p>
+<p>配置允许使用 guest远程访问</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建配置文件夹</span>
+<span class="token function">mkdir</span> -p /usr/local/rabbitmq/etc/rabbitmq
+<span class="token comment" spellcheck="true"># 创建配置文件</span>
+vim /usr/local/rabbitmq/etc/rabbitmq/rabbitmq.conf
+<span class="token comment" spellcheck="true"># 添加如下内容</span>
+loopback_users<span class="token operator">=</span>none
+<span class="token comment" spellcheck="true"># 重启RabbitMQ</span>
+rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl start_app
+//对应停止。重新加载配置，启动
+</code></pre>
+<p> 然后就可以使用guest用户来访问了</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408130327271.png" alt="image-20220408130327271"></p>
+<h4 id="账户管理"><a href="#账户管理" class="headerlink" title="账户管理"></a>账户管理</h4><p>因为RabbitMQ并不推荐我们远程使用guest用户访问，因为会变的不安全，因为不修改账户名和密码那他们都是guest</p>
+<p>guest账户默认只允许本地使用，我们可以创建新账户远程访问 RabbitMQ    </p>
+<h5 id="1-创建账户"><a href="#1-创建账户" class="headerlink" title="1 创建账户"></a>1 创建账户</h5><h5 id="-1"><a href="#-1" class="headerlink" title></a></h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建账户</span>
+rabbitmqctl add_user 用户名 密码
+</code></pre>
+<h5 id="2-给用户授予管理员角色"><a href="#2-给用户授予管理员角色" class="headerlink" title="2 给用户授予管理员角色"></a>2 给用户授予管理员角色</h5><pre class=" language-bash"><code class="language-bash">rabbitmqctl set_user_tags 用户名 administrator
+</code></pre>
+<h5 id="3-给用户授权"><a href="#3-给用户授权" class="headerlink" title="3 给用户授权"></a>3 给用户授权</h5><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># "/"表示虚拟机</span>
+<span class="token comment" spellcheck="true"># juejue表示用户名</span>
+<span class="token comment" spellcheck="true"># ".*" ".*" ".*" 表示完整权限</span>
+rabbitmqctl set_permissions -p <span class="token string">"/"</span> juejue <span class="token string">".*"</span> <span class="token string">".*"</span> <span class="token string">".*"</span>
+</code></pre>
+<h5 id="4-通过管控台访问rabbitmq"><a href="#4-通过管控台访问rabbitmq" class="headerlink" title="4 通过管控台访问rabbitmq"></a>4 通过管控台访问rabbitmq</h5><p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408130546799.png" alt="image-20220408130546799"></p>
+<p>推荐自己创建交换机</p>
+<h4 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h4><pre class=" language-bash"><code class="language-bash">curl -fsSL https://get.docker.com <span class="token operator">|</span> <span class="token function">bash</span> -s docker --mirror Aliyun
+<span class="token comment" spellcheck="true"># 启动docker</span>
+systemctl start docker
+</code></pre>
+<p>安装好之后拉一下镜像</p>
+<pre class=" language-bash"><code class="language-bash">docker pull rabbitmq
+</code></pre>
+<p>启动RabbitMQ容器</p>
+<pre class=" language-none"><code class="language-none">docker run -d --hostname juejue --name rabbit -p 15672:15672 -p 5672:5672 rabbitmq
+</code></pre>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220405150415806.png" alt="image-20220405150415806"></p>
+<p>开启管控台插件</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 查询rabbitmq容器ID</span>
+docker <span class="token function">ps</span>  
+<span class="token comment" spellcheck="true"># 进入容器</span>
+docker <span class="token function">exec</span> -it 容器ID /bin/bash
+<span class="token comment" spellcheck="true"># 开启管控台插件</span>
+rabbitmq-plugins <span class="token function">enable</span> rabbitmq_management
+<span class="token comment" spellcheck="true"># 退出容器</span>
+ctrl+p+q
+</code></pre>
+<p>然后容器的rabbitMQ是可以直接使用guest用户登陆的</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220405151331098.png" alt="image-20220405151331098"></p>
+<p>不理解，，难道我重新启动rabbitmq，之前创建的juejue用户就没了？整的我要重新创建一遍</p>
+<h4 id="简单模式"><a href="#简单模式" class="headerlink" title="简单模式"></a>简单模式</h4><p>RabbitMQ共有六种工作模式：简单模式（Simple）、工作队列模式（Work Queue）、发布订阅模式（Publish&#x2F;Subscribe）、路由 模式（Routing）、通配符模式（Topics）、远程调用模式（RPC， 不常用，这里不说)</p>
+<p>就是简单使用Java原生API去实现，这里不过多展示</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408134152170.png" alt="image-20220408134152170"></p>
+<h6 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h6><p>1 一个生产者对应一个消费者，通过队列进行消息传递。 </p>
+<p>2 该模式使用direct交换机，direct交换机是RabbitMQ默认交换机。运行代码就可以看见发送的消息了</p>
+<p>（JavaMessage Service）——–JMS</p>
+<p>JMS是JavaEE规范中的一种，类比JDBC。很多 MQ产品都实现了JMS规范，例如ActiveMQ。RabbitMQ官方并没 有实现JMS规范，但是开源社区有JMS的实现包。</p>
+<h4 id="工作队列模式"><a href="#工作队列模式" class="headerlink" title="工作队列模式"></a>工作队列模式</h4><p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408134220045.png" alt="image-20220408134220045"></p>
+<p>与简单模式相比，工作队列模式(Work Queue)多了一些消费者，该 模式也使用direct交换机，应用于处理消息较多的情况。</p>
+<p>特点如下： </p>
+<p>1 一个队列对应多个消费者。 </p>
+<p>2 一条消息只会被一个消费者消费。 </p>
+<p>3 消息队列默认采用轮询的方式将消息平均发送给消费者。</p>
+<h4 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h4><p>前两个模式当中，同一条消息只会被发送到一个队列当中，并且只会被一个消费者消费一次，</p>
+<p>但实际上有些消息是要被多次消费的</p>
+<p>有点不一样的就是，之前两个是直接往队列里面发消息</p>
+<p>但是现在这里会先发消息给交换机，由交换机再分发到队列当中</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406105628569.png" alt="image-20220406105628569"></p>
+<p>在开发过程中，有一些消息需要不同消费者进行不同的处理，如电 商网站的同一条促销信息需要短信发送、邮件发送、站内信发送 等。此时可以使用发布订阅模式(Publish&#x2F;Subscribe) </p>
+<p>特点： </p>
+<p>1 生产者将消息发送给交换机，交换机将消息转发到绑定此交换机的每个队列中。</p>
+<p>2 工作队列模式的交换机只能将消息发送给一个队列，发布订阅模式的交换机能将消息发送给多个队列。发布订阅模式使用fanout交换机。</p>
+<p>然后工作模式和发布订阅是可以一起使用的，也就是可以使用多个消费者去监听同一个队列，他们轮询分配消息。</p>
+<h4 id="路由模式"><a href="#路由模式" class="headerlink" title="路由模式"></a>路由模式</h4><p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406105957506.png" alt="image-20220406105957506"></p>
+<p>使用发布订阅模式时，所有消息都会发送到绑定的队列中，但很多 时候，不是所有消息都无差别的发布到所有队列中。比如电商网站 的促销活动，双十一大促可能会发布到所有队列；而一些小的促销 活动为了节约成本，只发布到站内信队列。此时需要使用路由模式 (Routing)完成这一需求。</p>
+<p>特点： </p>
+<p>1 每个队列绑定路由关键字RoutingKey   </p>
+<p>2 生产者将带有RoutingKey的消息发送给交换机，交换机根据RoutingKey转发到指定队列。路由模式使用direct交换机。</p>
+<p>然后交换机还是自己创建，不使用默认的</p>
+<p>然后每个队列是可以添加多个路由关键字的</p>
+<p>就是在交换机绑定队列的时候添加关键字，发送消息的时候也添加关键字。</p>
+<h4 id="通配符模式"><a href="#通配符模式" class="headerlink" title="通配符模式"></a>通配符模式</h4><p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220408134734549.png" alt="image-20220408134734549"></p>
+<p>其实就相当于路由模式的进阶版，比路由模式更加的灵活</p>
+<p>生产者和路由模式中的区别就是绑定路由关键字的时候关键字里面带有通配符</p>
+<p>其实通配符模式也叫主题模式topic</p>
+<p>消费者就和也是直接拿路由模式的修改一下监听的队列就行，最终效果和路由模式的效果一样</p>
+<h3 id="Springboot整合RabbtMQ"><a href="#Springboot整合RabbtMQ" class="headerlink" title="Springboot整合RabbtMQ"></a>Springboot整合RabbtMQ</h3><p>之前都是原生Java操作RabbitMQ，真正开发的时候更多都是用框架来简化RabbitMQ的操作；</p>
+<p>配置文件</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 配置RabbitMQ</span>
+<span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.8.14
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5672</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">virtual-host</span><span class="token punctuation">:</span> /
+
+<span class="token comment" spellcheck="true">#日志格式</span>
+<span class="token key atrule">logging</span><span class="token punctuation">:</span>
+  <span class="token key atrule">pattern</span><span class="token punctuation">:</span>
+    <span class="token key atrule">console</span><span class="token punctuation">:</span> '%d&amp;<span class="token comment" spellcheck="true">#123;HH:mm:ss.SSS&amp;#125;%clr(%-5level) ---[%-15thread]%cyan(%-50logger&amp;#123;50&amp;#125;):%msg%n'</span>
+</code></pre>
+<p>SpringBoot整合RabbitMQ时，需要在配置类创建队列和交换机</p>
+<pre class=" language-JAVA"><code class="language-JAVA">package com.jian.rabbitmqspringboot;
+
+import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class RabbitConfig &#123;
+    private final String EXCHANGE_NAME = "boot_topic_exchange";
+    private final String QUEUE_NAME = "boot_queue";
+    // 创建交换机
+    @Bean("bootExchange")
+    public Exchange getExchange() &#123;
+        return ExchangeBuilder
+                .topicExchange(EXCHANGE_NAME) // 交换机类型
+                .durable(true) // 是否持久化
+                .build();
+    &#125;
+    // 创建队列
+    @Bean("bootQueue")
+    public Queue getMessageQueue() &#123;
+        return new Queue(QUEUE_NAME); // 队列名
+    &#125;
+    // 交换机绑定队列
+    @Bean//参数的交换机和队列都是从spring容器中拿的
+    public Binding bindMessageQueue(@Qualifier("bootExchange") Exchange exchange, @Qualifier("bootQueue") Queue queue) &#123;
+        return BindingBuilder
+                .bind(queue)
+                .to(exchange)
+                .with("#.message.#")
+                .noargs();
+    &#125;
+&#125;
+</code></pre>
+<p>SpringBoot整合RabbitMQ时，提供了工具类RabbitTemplate发送 消息，编写生产者时只需要注入RabbitTemplate即可发送消息。</p>
+<pre class=" language-JAVA"><code class="language-JAVA">@SpringBootTest
+public class TestProducer &#123;
+    // 注入RabbitTemplate工具类
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Test
+    public void testSendMessage()&#123;
+        /*
+         * 发送消息
+         * 参数1：交换机
+         * 参数2：路由key
+         * 参数3：要发送的消息
+         */
+        rabbitTemplate.convertAndSend("boot_topic_exchange","message","双十一开始了！");
+
+    &#125;
+&#125;
+</code></pre>
+<p>然后另一个项目编写消费者，为什么？？因为如果是同一个项目的话，直接调用就可以，不需要通过MQ去通信</p>
+<pre class=" language-JAVA"><code class="language-JAVA">//消费者
+@Component
+public class Consumer &#123;
+    //监听队列
+    @RabbitListener(queues = "boot_queue")
+    public void listenMessage(String message)&#123;
+        System.out.println("接收消息："+message);
+
+    &#125;
+&#125;
+</code></pre>
+<p>然后消费者就不要写测试方法了，直接写普通方法，这样启动之后他就会一直监听队列</p>
+<p>直接拿过来字符串类型的消息就可以用，框架会帮我们去做那个byte的转换</p>
+<p>这个消费者是随着项目的启动而启动的</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406164530529.png" alt="image-20220406164530529"></p>
+<h3 id="消息的可靠性投递"><a href="#消息的可靠性投递" class="headerlink" title="消息的可靠性投递"></a>消息的可靠性投递</h3><p>RabbitMQ消息投递的路径为： 生产者 —&gt; 交换机 —&gt; 队列 —&gt; 消费者</p>
+<ul>
+<li>确认模式（confirm）可以监听消息是否从生产者成功传递到交换机  。 </li>
+<li>退回模式（return）可以监听消息是否从交换机成功传递到队列。 </li>
+<li>消费者消息确认（Consumer Ack）可以监听消费者是否成功处理消息。</li>
+</ul>
+<h4 id="确认模式"><a href="#确认模式" class="headerlink" title="确认模式"></a>确认模式</h4><p>确认模式（confirm）可以监听消息是否从生产者成功传递到交换机。 退回模式（return）可以监听消息是否从交换机成功传递到队列。 消费者消息确认（Consumer Ack）可以监听消费者是否成功处理消息。</p>
+<p>确认模式：在生产者中配置之后才会有作用</p>
+<p>故意写错一个发送消息的交换器名字之后，运行发现交换机和队列都创建出来了，但是，队列里面没有消息，而且控制台也不报错，这就是不加确认模式的一个效果</p>
+<h5 id="1-生产者配置文件开启确认模式"><a href="#1-生产者配置文件开启确认模式" class="headerlink" title="1 生产者配置文件开启确认模式"></a>1 生产者配置文件开启确认模式</h5><p>加了之后</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406174100375.png" alt="image-20220406174100375"></p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.8.14
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5672</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">virtual-host</span><span class="token punctuation">:</span> /
+    <span class="token comment" spellcheck="true"># 开启确认模式</span>
+    <span class="token key atrule">publisher-confirm-type</span><span class="token punctuation">:</span> correlated
+</code></pre>
+<h5 id="2-生产者定义确认模式的回调方法"><a href="#2-生产者定义确认模式的回调方法" class="headerlink" title="2 生产者定义确认模式的回调方法"></a>2 生产者定义确认模式的回调方法</h5><pre class=" language-JAVA"><code class="language-JAVA">@Test
+public void sendMessage()&#123;
+    //定义确认模式的回调方法，消息交换机发送后会调用confirm方法
+    rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback()&#123;
+        /**
+         * 被调用的回调方法
+         * @param correlationData 相关配置信息
+         * @param ack 交换机是否成功收到消息
+         * @param cause 失败原因
+         */
+        @Override
+        public void confirm(CorrelationData correlationData, boolean ack, String cause) &#123;
+        if (ack)&#123;
+            System.out.println("confirm接收成功");
+        &#125;else &#123;
+            System.out.println("接收失败，原因为："+cause);
+            //做一些处理，让消息再次发送
+            &#125;
+        &#125;
+    &#125;);
+    //故意写一个错的交换机
+    rabbitTemplate.convertAndSend("my_topic_exchange","my_routing","Send Message...");
+&#125;
+</code></pre>
+<h4 id="退回模式"><a href="#退回模式" class="headerlink" title="退回模式"></a>退回模式</h4><p>退回模式：可以监听消息是否从交换机成功传递到队列</p>
+<h5 id="1-生产者配置文件开启退回模式"><a href="#1-生产者配置文件开启退回模式" class="headerlink" title="1 生产者配置文件开启退回模式"></a>1 生产者配置文件开启退回模式</h5><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 配置RabbitMQ</span>
+<span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.8.14
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5672</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">virtual-host</span><span class="token punctuation">:</span> /
+    <span class="token comment" spellcheck="true"># 开启确认模式</span>
+    <span class="token key atrule">publisher-confirm-type</span><span class="token punctuation">:</span> correlated
+      <span class="token comment" spellcheck="true"># 开启回退模式</span>
+    <span class="token key atrule">publisher-returns</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+</code></pre>
+<h5 id="2-生产者定义退回模式的回调方法"><a href="#2-生产者定义退回模式的回调方法" class="headerlink" title="2 生产者定义退回模式的回调方法"></a>2 生产者定义退回模式的回调方法</h5><pre class=" language-JAVA"><code class="language-JAVA">@Test
+public void testReturn()&#123;
+    //定义退回模式的回调方法。交换机发送到队列失败后才会执行returnedMessage方法
+    rabbitTemplate.setReturnsCallback(new RabbitTemplate.ReturnsCallback()&#123;
+        /**
+         * @param returnedMessage 失败后将失败信息封装到参数中
+         */
+        @Override
+        public void returnedMessage(ReturnedMessage returnedMessage) &#123;
+            System.out.println("消息对象："+returnedMessage.getMessage());
+            System.out.println("错误码："+returnedMessage.getReplyCode());
+            System.out.println("错误信息："+returnedMessage.getReplyText());
+            System.out.println("交换机："+returnedMessage.getExchange());
+            System.out.println("路由键："+returnedMessage.getRoutingKey());
+            //处理消息。。。。
+        &#125;
+    &#125;);
+
+    rabbitTemplate.convertAndSend("my_topic_exchange","my_routing1","Send Message...");
+&#125;
+</code></pre>
+<p>这里故意把routingKey写错，也是发送不到队列还没有报错</p>
+<p>写错之后的发送</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406183631452.png" alt="image-20220406183631452"></p>
+<h4 id="Ack"><a href="#Ack" class="headerlink" title="Ack"></a>Ack</h4><p>在RabbitMQ中，消费者接收到消息后会向队列发送确认签收的消 息，只有确认签收的消息才会被移除队列。这种机制称为消费者消 息确认（Consumer Acknowledge，简称Ack）。类似快递员派送 快递也需要我们签收，否则一直存在于快递公司的系统中。 消息分为自动确认和手动确认。自动确认指消息只要被消费者接收 到，无论是否成功处理消息，则自动签收，并将消息从队列中移 除。但是在实际开发中，收到消息后可能业务处理出现异常，那么 消息就会丢失。此时需要设置手动签收，即在业务处理成功再通知 签收消息，如果出现异常，则拒签消息，让消息依然保留在队列当中。</p>
+<p>自动确认：spring.rabbitmq.listener.simple.acknowledge&#x3D;”none” </p>
+<p>手动确认：spring.rabbitmq.listener.simple.acknowledge&#x3D;”manual”</p>
+<h5 id="-2"><a href="#-2" class="headerlink" title></a></h5><p>然后就是消费者故意人为的制造一个bug&#x2F;0，控制台直接报错，但是队列中的消息还是被消费完了</p>
+<p>然后再发一次，还是没有成功处理掉，就相当于说消息丢失了，所以在开发的时候更多使用的是手动签收消息</p>
+<h5 id="1-消费者配置开启手动签收"><a href="#1-消费者配置开启手动签收" class="headerlink" title="1 消费者配置开启手动签收"></a>1 消费者配置开启手动签收</h5><pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 配置RabbitMQ</span>
+<span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.8.14
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5672</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">virtual-host</span><span class="token punctuation">:</span> /
+    <span class="token comment" spellcheck="true"># 手动签收</span>
+    <span class="token key atrule">listener</span><span class="token punctuation">:</span>
+      <span class="token key atrule">simple</span><span class="token punctuation">:</span>
+        <span class="token key atrule">acknowledge-mode</span><span class="token punctuation">:</span> manual
+</code></pre>
+<h5 id="2-消费者处理消息时定义手动签收和拒绝签收的情况"><a href="#2-消费者处理消息时定义手动签收和拒绝签收的情况" class="headerlink" title="2 消费者处理消息时定义手动签收和拒绝签收的情况"></a>2 消费者处理消息时定义手动签收和拒绝签收的情况</h5><pre class=" language-JAVA"><code class="language-JAVA">package com.jian.myconsumer1;
+
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+
+@Component
+public class AckConsumer &#123;
+
+    //监听队列
+    @RabbitListener(queues = "my_queue")
+    public void listenMessage(Message message, Channel channel) throws IOException &#123;
+        //需要使用信道来完成消息的手动签收
+        //消息投递序号，消息每次投递该值都会+1
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try &#123;
+            int i = 1 / 0;//模拟处理消息出现bug
+            System.out.println("成功接收消息：" + message);
+
+            //签收消息
+            /**
+             * 参数1：消息投递序号
+             * 参数2：是否一次可以签收多条消息
+             */
+            channel.basicAck(deliveryTag, true);
+        &#125; catch (Exception e) &#123;
+            //拒签消息
+            /**
+             * 参数1：消息投递序号
+             * 参数2：是否一次可以拒签多条消息
+             * 参数3：消息是否可以重回队列
+             */
+            channel.basicNack(deliveryTag,true,true);
+        &#125;
+
+    &#125;
+&#125;
+</code></pre>
+<p>写好之后重启消费方，并再次发送一条消息，就会一直显示消息消费失败，因为回退了又发过来，就会一直报</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406191805803.png" alt="image-20220406191805803"></p>
+<p>消息是一直在队列中的，处于一个未签收的状态，消息并不会丢失掉</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406192133446.png" alt="image-20220406192133446"></p>
+<p><strong>为了避免大量消息把消费者冲击奔溃，就是暂时存在MQ中</strong></p>
+<p>来看看没有开启限流的一个效果，就会一下全部丢给消费者，测试数据少，要是十万条一下丢呢？？</p>
+<p>不就会内存溢出？内存泄漏？</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406194441454.png" alt="image-20220406194441454"></p>
+<h3 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h3><h4 id="消费端限流"><a href="#消费端限流" class="headerlink" title="消费端限流"></a>消费端限流</h4><p>MQ可以对请求进行“削峰填谷”，即通过消费端限流的 方式限制消息的拉取速度，达到保护消费端的目的。</p>
+<p>1 生产者批量发送消息</p>
+<p>就是搞个for循环</p>
+<pre class=" language-JAVA"><code class="language-JAVA">@Test
+public void testSendBatch()&#123;
+    for (int i = 0; i < 20; i++) &#123;
+        rabbitTemplate.convertAndSend("my_topic_exchange","my_routing","Send Message..."+i);
+    &#125;
+&#125;
+</code></pre>
+<p>2 消费端配置限流机制</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 配置RabbitMQ</span>
+<span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.8.14
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5672</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">virtual-host</span><span class="token punctuation">:</span> /
+    <span class="token key atrule">listener</span><span class="token punctuation">:</span>
+      <span class="token key atrule">simple</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 限流机制必须开启手动签收</span>
+        <span class="token key atrule">acknowledge-mode</span><span class="token punctuation">:</span> manual
+        <span class="token comment" spellcheck="true"># 消费端最多拉去5条消息消费，签收后不满5条才会继续拉去消息</span>
+        <span class="token key atrule">prefetch</span><span class="token punctuation">:</span> <span class="token number">5</span>
+</code></pre>
+<p>3 消费者监听队列</p>
+<p>新写一个消费方，把之前的消费方的注解注释掉不让它监听了</p>
+<pre class=" language-JAVA"><code class="language-JAVA">package com.jian.myconsumer1;
+
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+
+@Component
+public class OosConsumer &#123;
+//Oos就是限流的意思
+    //监听队列
+    @RabbitListener(queues = "my_queue")
+    public void listenMessage(Message message, Channel channel) throws IOException, InterruptedException &#123;
+       //获取消息
+        System.out.println(new String(message.getBody()));
+        //2.模拟业务处理
+        Thread.sleep(3000);
+        //3.签收消息
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
+
+
+    &#125;
+&#125;
+</code></pre>
+<p>发个20条的</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406195014144.png" alt="image-20220406195014144"></p>
+<p>看看公平分发因为处理时间不同的效果</p>
+<p>但是第一次是全让消费者1消费了，应该是先把消费者1启动起来了，再发消息看看</p>
+<p>然后就会看见，消费者1很快就处理完了，就是等着消费者2处理</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406204258726.png" alt="image-20220406204258726"></p>
+<p>这就是公平分发的一个效果，所以说公平分发就会造成消费者资源的浪费</p>
+<p>接下来是不公平分发，就是谁处理的快让谁处理的多</p>
+<h4 id="利用限流实现不公平分发"><a href="#利用限流实现不公平分发" class="headerlink" title="利用限流实现不公平分发"></a>利用限流实现不公平分发</h4><p>在RabbitMQ中，多个消费者监听同一条队列，则队列默认采用的 轮询分发。但是在某种场景下这种策略并不是很好，例如消费者1处 理任务的速度非常快，而其他消费者处理速度却很慢。此时如果采 用公平分发，则消费者1有很大一部分时间处于空闲状态。此时可以 采用不公平分发，即谁处理的快，谁处理的消息多。</p>
+<p>1 生产者批量发送消息</p>
+<p>2 消费端配置不公平分发</p>
+<p>然后先把消费端的限流最多拉取5注释掉,也就是把限流给他去掉，弄成1</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 配置RabbitMQ</span>
+<span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rabbitmq</span><span class="token punctuation">:</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.8.14
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5672</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> juejue
+    <span class="token key atrule">virtual-host</span><span class="token punctuation">:</span> /
+    <span class="token key atrule">listener</span><span class="token punctuation">:</span>
+      <span class="token key atrule">simple</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 限流机制必须开启手动签收</span>
+        <span class="token key atrule">acknowledge-mode</span><span class="token punctuation">:</span> manual
+        <span class="token comment" spellcheck="true"># 消费端最多拉去5条消息消费，签收后不满5条才会继续拉去消息</span>
+<span class="token comment" spellcheck="true">#        prefetch: 5</span>
+        <span class="token comment" spellcheck="true"># 消费者最多拉去一条消息进行消费，这样谁处理快谁拉取下一条消息</span>
+        <span class="token key atrule">prefetch</span><span class="token punctuation">:</span> <span class="token number">1</span>
+</code></pre>
+<p>3 编写两个消费者</p>
+<pre class=" language-JAVA"><code class="language-JAVA">package com.jian.myconsumer1;
+
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+
+@Component
+public class UnfairConsumer &#123;
+    //消费者1
+    @RabbitListener(queues = "my_queue")
+    public void listenMessage1(Message message, Channel channel) throws IOException, InterruptedException &#123;
+       //获取消息
+        System.out.println("消费者1："+new String(message.getBody()));
+        //2.模拟业务处理
+        Thread.sleep(500);
+        //3.签收消息
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
+    &#125;
+
+
+    //消费者1
+    @RabbitListener(queues = "my_queue")
+    public void listenMessage2(Message message, Channel channel) throws IOException, InterruptedException &#123;
+        //获取消息
+        System.out.println("消费者2："+new String(message.getBody()));
+        //2.模拟业务处理
+        Thread.sleep(3000);
+        //3.签收消息
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
+
+
+    &#125;
+
+
+&#125;
+</code></pre>
+<p>真的是，只要配置文件的缩进有一个空格的区别，都会直接报错，运行都运行不了</p>
+<p>来看看，这样就造成了性能的节约，这就是利用限流机制实现不公平分发</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220406212028303.png" alt="image-20220406212028303"></p>
+<h4 id="消息存活时间"><a href="#消息存活时间" class="headerlink" title="消息存活时间"></a>消息存活时间</h4><p>RabbitMQ可以设置消息的存活时间（Time To Live，简称TTL）， 当消息到达存活时间后还没有被消费，会被移出队列。RabbitMQ 可以对队列的所有消息设置存活时间，也可以对某条消息设置存活时间。</p>
+<p><strong>对队列消息设置存活时间，要在创建队列的时候设置</strong></p>
+<p><strong>对某条消息设置存活时间，要在发送消息的时候设置</strong></p>
+<p>注释掉原来生产者（myproducer1）的配置类，复制过来一份</p>
+<p>设置队列消息存活时间</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407092358460.png" alt="image-20220407092358460"></p>
+<p>单条消息设置存活时间</p>
+<pre class=" language-JAVA"><code class="language-JAVA">//发送消息，设置消息的存活时间
+    @Test
+    public void testSendMessage()&#123;
+        //1.创建消息属性
+        MessageProperties messageProperties = new MessageProperties();
+        //2.设置存活时间
+        messageProperties.setExpiration("10000");
+        //3.创建消息对象
+        Message message = new Message("send Message,...".getBytes(),messageProperties);
+        //4.发送消息
+        rabbitTemplate.convertAndSend("my_topic_exchange","my_routing",message);
+
+    &#125;
+</code></pre>
+<p>接下里注意两个事情</p>
+<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><p>1 如果设置了单条消息的存活时间，也设置了队列的存活时 间，以时间短的为准。</p>
+<p>2 消息过期后，并不会马上移除消息，只有<strong>消息消费到队列顶端</strong>时，才会移除该消息。</p>
+<h4 id="优先级队列"><a href="#优先级队列" class="headerlink" title="优先级队列"></a>优先级队列</h4><p>假设在电商系统中有一个订单催付的场景，即客户在一段时间内未 付款会给用户推送一条短信提醒，但是系统中分为大型商家和小型商家。比如像苹果，小米这样大商家一年能给我们创造很大的利润，所以在订单量大时，他们的订单必须得到优先处理，此时就需 要为不同的消息设置不同的优先级，此时我们要使用优先级队列。    优先级数值越大，越先被消费</p>
+<p>1 创建队列和交换机</p>
+<pre class=" language-JAVA"><code class="language-JAVA">package com.jian.myproducer1;
+
+import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+//@Configuration
+public class RabbitConfig3 &#123;
+    private final String EXCHANGE_NAME = "priority_exchange";
+    private final String QUEUE_NAME = "priority_queue";
+    // 创建交换机
+    @Bean(EXCHANGE_NAME)
+    public Exchange getExchange() &#123;
+        return ExchangeBuilder
+                .topicExchange(EXCHANGE_NAME) // 交换机类型
+                .durable(true) // 是否持久化
+                .build();
+    &#125;
+    // 创建队列
+    @Bean(QUEUE_NAME)
+    public Queue getMessageQueue() &#123;
+        return QueueBuilder
+                .durable(QUEUE_NAME)//队列持久化
+                .maxPriority(10)//设置队列的最大优先级，最大可以到255，官网推荐不超过10，太高比较浪费资源
+                .build();
+
+    &#125;
+    // 交换机绑定队列
+    @Bean//参数的交换机和队列都是从spring容器中拿的
+    public Binding bindMessageQueue(@Qualifier(EXCHANGE_NAME) Exchange exchange, @Qualifier(QUEUE_NAME) Queue queue) &#123;
+        return BindingBuilder
+                .bind(queue)
+                .to(exchange)
+                .with("my_routing").noargs();
+    &#125;
+&#125;
+</code></pre>
+<p>2 编写生产者</p>
+<pre class=" language-JAVA"><code class="language-JAVA">@Test
+public void testPriority()&#123;
+    for (int i = 0; i < 10; i++) &#123;
+        if (i==5)&#123;//i为5时优先级较高
+            //1.创建消息属性
+            MessageProperties messageProperties = new MessageProperties();
+            //2.设置优先级
+            messageProperties.setPriority(9);
+            //3.创建消息对象
+            Message message = new Message(("send Message,..."+i).getBytes(),messageProperties);
+            //4.发送消息
+            rabbitTemplate.convertAndSend("priority_exchange","my_routing",message);
+        &#125;else &#123;
+            rabbitTemplate.convertAndSend("priority_exchange","my_routing","send Message");
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>3 编写消费者</p>
+<pre class=" language-JAVA"><code class="language-JAVA">package com.jian.myconsumer1;
+
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+@Component
+public class PriorityConsumer &#123;
+//    @RabbitListener(queues = "priority_queue")
+    public void listenMessage(Message message, Channel channel) throws IOException &#123;
+        //获取消息
+        System.out.println(new String(message.getBody()));
+        //签收消息
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
+    &#125;
+&#125;
+</code></pre>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407101710237.png" alt="image-20220407101710237"></p>
+<h4 id="死信队列"><a href="#死信队列" class="headerlink" title="死信队列"></a>死信队列</h4><p>在MQ中，当消息成为死信（Dead message）后，消息中间件可以 将其从当前队列发送到另一个队列中，这个队列就是死信队列。而 在RabbitMQ中，由于有交换机的概念，实际是将死信发送给了死信交换机（Dead Letter Exchange，简称DLX）。死信交换机和死信队列和普通的没有区别。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407182948566.png" alt="image-20220407182948566"></p>
+<p>消息成为死信的情况： </p>
+<p>1 队列消息长度到达限制。 </p>
+<p>2 消费者拒签消息，并且不把消息重新放入原队列。 </p>
+<p>3 消息到达存活时间未被消费。</p>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><p>创建死信队列</p>
+<pre class=" language-JAVA"><code class="language-JAVA">package com.jian.myproducer1;
+
+import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class RabbitConfig4 &#123;
+    private final String DEAD_EXCHANGE = "dead_exchange";
+    private final String DEAD_QUEUE = "dead_queue";
+    private final String NORMAL_EXCHANGE = "normal_exchange";
+    private final String NORMAL_QUEUE = "normal_queue";
+    // 死信交换机
+    @Bean(DEAD_EXCHANGE)
+    public Exchange deadExchange() &#123;
+        return ExchangeBuilder
+                .topicExchange(DEAD_EXCHANGE) // 交换机类型
+                .durable(true) // 是否持久化
+                .build();
+    &#125;
+    // 死信队列
+    @Bean(DEAD_QUEUE)
+    public Queue deadQueue() &#123;
+        return QueueBuilder
+                .durable(DEAD_QUEUE)
+                .build();
+    &#125;
+    // 死信交换机绑定死信队列
+    @Bean
+    public Binding bindDeadQueue(@Qualifier(DEAD_EXCHANGE) Exchange exchange, @Qualifier(DEAD_QUEUE) Queue queue) &#123;
+        return BindingBuilder
+                .bind(queue)
+                .to(exchange)
+                .with("dead_routing").noargs();
+    &#125;
+
+    //普通交换机
+    @Bean(NORMAL_EXCHANGE)
+    public Exchange normalExchange() &#123;
+        return ExchangeBuilder
+                .topicExchange(NORMAL_EXCHANGE) // 交换机类型
+                .durable(true) // 是否持久化
+                .build();
+    &#125;
+    // 普通队列
+    @Bean(NORMAL_QUEUE)
+    public Queue normalQueue() &#123;
+        return QueueBuilder
+                .durable(NORMAL_QUEUE)
+                .deadLetterExchange(DEAD_EXCHANGE)//绑定死信交换机
+                .deadLetterRoutingKey("dead_routing")//死信队列路由关键字
+                .ttl(10000)//消息存活10秒
+                .maxLength(10)//队列最大长度为10
+                .build();
+
+    &#125;
+
+    // 普通交换机绑定普通队列
+    @Bean
+    public Binding bindMessageQueue(@Qualifier(NORMAL_EXCHANGE) Exchange exchange, @Qualifier(NORMAL_QUEUE) Queue queue) &#123;
+        return BindingBuilder
+                .bind(queue)
+                .to(exchange)
+                .with("my_routing").noargs();
+    &#125;
+&#125;
+</code></pre>
+<h6 id="注意：-1"><a href="#注意：-1" class="headerlink" title="注意："></a>注意：</h6><p><strong>普通队列绑定死信队列时，需要绑定死信交换机和死信队列的路由关键字</strong></p>
+<h5 id="测试死信队列"><a href="#测试死信队列" class="headerlink" title="测试死信队列"></a>测试死信队列</h5><p>1 生产者发送消息</p>
+<pre class=" language-JAVA"><code class="language-JAVA">  @Test
+    public void testDlx()&#123;
+        //存活时间过期后变成死信
+//        rabbitTemplate.convertAndSend("normal_exchange","my_routing","测试死信！");
+        //超过队列长度后变成死信
+//        for (int i = 0; i < 20; i++) &#123;
+//            rabbitTemplate.convertAndSend("normal_exchange","my_routing","测试死信！");
+//        &#125;
+        //消息拒签但不返回原队列后变成死信
+        rabbitTemplate.convertAndSend("normal_exchange","my_routing","测试死信！");
+    &#125;
+</code></pre>
+<p>存活时间过期</p>
+<p>消息超时放到死信队列中</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407135305003.png" alt="image-20220407135305003"></p>
+<p>超出长度后放到死信队列当中</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407135748948.png" alt="image-20220407135748948"></p>
+<p>拒签</p>
+<p>因为忘记开消费者，所以之前发的一条消息超时放进去变24，然后先开启拒签消费者再发送</p>
+<p>然后消费方开不起来，一看，消费方没加@Component</p>
+<p>一发完就直接拒签进死信，完全不放原来队列</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407140653964.png" alt="image-20220407140653964"></p>
+<h4 id="延迟队列"><a href="#延迟队列" class="headerlink" title="延迟队列"></a>延迟队列</h4><p>延迟队列，即消息进入队列后不会立即被消费，只有到达指定时间 后，才会被消费。 例如：用户下单后，30分钟后查询订单状态，未支付则会取消订单。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407184303377.png" alt="image-20220407184303377"></p>
+<p>但RabbitMQ中并未提供延迟队列功能，我们可以使用死信队列实现延迟队列的效果。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407184325497.png" alt="image-20220407184325497"></p>
+<h5 id="死信队列实现"><a href="#死信队列实现" class="headerlink" title="死信队列实现"></a>死信队列实现</h5><h5 id="插件实现"><a href="#插件实现" class="headerlink" title="插件实现"></a>插件实现</h5><p>在使用死信队列实现延迟队列时，会遇到一个问题：RabbitMQ只 会移除队列顶端的过期消息，如果第一个消息的存活时长较长，而 第二个消息的存活时长较短，则第二个消息并不会及时执行。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407194715665.png" alt="image-20220407194715665"></p>
+<p>RabbitMQ虽然本身不能使用延迟队列，但官方提供了延迟队列插 件，安装后可直接使用延迟队列。</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407194730806.png" alt="image-20220407194730806"></p>
+<h6 id="安装延迟队列插件"><a href="#安装延迟队列插件" class="headerlink" title="安装延迟队列插件"></a>安装延迟队列插件</h6><p>1 上传至&#x2F;usr&#x2F;local&#x2F;rabbitmq&#x2F;plugins&#x2F;下</p>
+<p>2 启用插件</p>
+<pre class=" language-bash"><code class="language-bash">rabbitmq-plugins <span class="token function">enable</span> rabbitmq_delayed_message_exchange
+</code></pre>
+<p>3 重启RabbitMQ服务</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#停止rabbitmq</span>
+rabbitmqctl stop
+<span class="token comment" spellcheck="true">#启动rabbitmq</span>
+rabbitmq-server restart -detached
+</code></pre>
+<p>这样就把延队列的一个插件安装成功了，此时登录管控台可以看到交换机类型多了延迟消息</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407185450590.png" alt="image-20220407185450590"></p>
+<h6 id="使用延迟队列"><a href="#使用延迟队列" class="headerlink" title="使用延迟队列"></a>使用延迟队列</h6><p>1 创建延迟交换机和延迟队列</p>
+<pre class=" language-JAVA"><code class="language-JAVA">package com.jian.myorder;
+
+import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+public class RabbitConfig2 &#123;
+    public final String DELAYED_EXCHANGE = "delayed_exchange";
+    public final String DELAYED_QUEUE = "delayed_queue";
+
+    //1.延迟交换机
+    @Bean(DELAYED_EXCHANGE)
+    public Exchange delayedExchange() &#123;
+        // 创建自定义交换机
+        Map<String, Object> args = new HashMap<>();
+        //就是延迟交换机也是有实际类型的
+        args.put("x-delayed-type","topic"); // topic类型的延迟交换机
+        //参数：交换机名字，类型，是否持久化，是否自动删除
+        return new CustomExchange(DELAYED_EXCHANGE, "x-delayed-message", true, false, args);
+    &#125;
+    //2.延迟队列
+    @Bean(DELAYED_QUEUE)
+    public Queue delayedQueue() &#123;
+        return QueueBuilder
+                .durable(DELAYED_QUEUE)
+                .build();
+    &#125;
+    // 3.绑定
+    @Bean
+    public Binding
+    bindingDelayedQueue(@Qualifier(DELAYED_QUEUE) Queue queue, @Qualifier(DELAYED_EXCHANGE) Exchange exchange) &#123;
+        return BindingBuilder
+                .bind(queue)
+                .to(exchange)
+                .with("order_routing").noargs();
+    &#125;
+&#125;
+</code></pre>
+<p>就不能使用ExchangeBuilder去创建交换机了，因为没有</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407185932617.png" alt="image-20220407185932617"></p>
+<p>需要注意的一点就是我们创建延迟队列的时候没有办法去设置消息的延迟时间，只有在发送消息的时候才能去设置一个延迟时间</p>
+<p>2 编写下单的控制器方法</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//插件下单</span>
+<span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/place2/&amp;#123;orderId&amp;#125;"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> String <span class="token function">placeOrders</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span> String orderId<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"处理订单数据---插件实现延迟队列？"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//设置延迟时间10s</span>
+    MessagePostProcessor messagePostProcessor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MessagePostProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> Message <span class="token function">postProcessMessage</span><span class="token punctuation">(</span>Message message<span class="token punctuation">)</span> <span class="token keyword">throws</span> AmqpException <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            message<span class="token punctuation">.</span><span class="token function">getMessageProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setDelay</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> message<span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//将订单id发送到订单队列</span>
+    rabbitTemplate<span class="token punctuation">.</span><span class="token function">convertAndSend</span><span class="token punctuation">(</span><span class="token string">"delayed_exchange"</span><span class="token punctuation">,</span><span class="token string">"order_routing"</span><span class="token punctuation">,</span>orderId<span class="token punctuation">,</span>messagePostProcessor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"下单成功，修改库存--插件"</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>3 编写延迟队列的消费者</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//监听过期订单的队列，普通订单队列是不需要监听的</span>
+<span class="token annotation punctuation">@RabbitListener</span><span class="token punctuation">(</span>queues <span class="token operator">=</span> <span class="token string">"delayed_queue"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">listenMessage2</span><span class="token punctuation">(</span>String orderId<span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"查询"</span><span class="token operator">+</span>orderId<span class="token operator">+</span><span class="token string">"号订单的状态，如果已支付无需处理，如果未支付则回退库存"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>访问测试</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407194248473.png" alt="image-20220407194248473"></p>
+<p>然后发消息之后，队列中也是没有显示的，直接就给消费者了。然后消费者等了10s之后才去消费</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407194429308.png" alt="image-20220407194429308"></p>
+<p>然后就是使用插件比较方便一些，就没有必要去创建那么多的交换机和队列</p>
+<h4 id="搭建集群"><a href="#搭建集群" class="headerlink" title="搭建集群"></a>搭建集群</h4><p>就是单台MQ无法满足消息的吞吐量以及安全性要求的时候，就比如无法满足消息的吞吐量：RabbitMQ每秒能接收1万条消息，但是系统能生产5万</p>
+<p>安全性：单台宕机</p>
+<p>这里就一个机器设置两个RabbitMQ服务了</p>
+<p>1 设置两个RabbitMQ服务</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 关闭RabbitMQ服务</span>
+rabbitmqctl stop
+<span class="token comment" spellcheck="true"># 设置服务一</span>
+RABBITMQ_NODE_PORT<span class="token operator">=</span>5673 RABBITMQ_NODENAME<span class="token operator">=</span>rabbit1 rabbitmq-server start -detached
+<span class="token comment" spellcheck="true"># 设置服务二</span>
+RABBITMQ_NODE_PORT<span class="token operator">=</span>5674 RABBITMQ_SERVER_START_ARGS<span class="token operator">=</span><span class="token string">"-rabbitmq_management listener [&amp;#123;port,15674&amp;#125;]"</span> RABBITMQ_NODENAME<span class="token operator">=</span>rabbit2 rabbitmq-server start -detached
+
+这里只是启动了两个服务，不是在一个集群里，然后启动后之前创建的数据都会丢失，包括创建的页面
+</code></pre>
+<p>2 将两个服务设置到同一集群中</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 关闭服务2</span>
+rabbitmqctl -n rabbit2 stop_app    
+<span class="token comment" spellcheck="true"># 重新设置服务2</span>
+rabbitmqctl -n rabbit2 reset
+<span class="token comment" spellcheck="true"># 将服务2加入服务1中</span>
+rabbitmqctl -n rabbit2 join_cluster rabbit1@localhost
+<span class="token comment" spellcheck="true"># 启动服务2</span>
+rabbitmqctl -n rabbit2 start_app
+</code></pre>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407203916178.png" alt="image-20220407203916178"></p>
+<p>5672希望留给负载均衡服务器用</p>
+<p>将服务2加入服务1中,网上看的都是装在windows的cookie不一致</p>
+<p>然后我去分别看了一下</p>
+<p>&#x2F;root&#x2F;.erlang.cookie         ~&#x2F;.erlang.cookie </p>
+<p>里面的cookie是一样的</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407211558045.png" alt="image-20220407211558045"></p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407210329849.png" alt="image-20220407210329849"></p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407211610431.png" alt="image-20220407211610431"></p>
+<p>我就是加不进去啊！！就先放着吧，也不知道啥问题</p>
+<h4 id="镜像队列"><a href="#镜像队列" class="headerlink" title="镜像队列"></a>镜像队列</h4><p>搭建了集群后，虽然多个节点可以互相通信，但队列只保存在了一 个节点中，如果该节点故障，则整个集群都将丢失消息。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 关闭服务1</span>
+rabbitmqctl -n rabbit1 stop_app
+</code></pre>
+<p>2就访问不到了废了</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407213037708.png" alt="image-20220407213037708"></p>
+<p>此时我们需要引入镜像队列机制，它可以将队列消息复制到集群中的其他节点上。如果一个节点失效了，另一个节点上的镜像可以保证服务的可用性。</p>
+<p>在管控台点击 Admin —&gt; Policies 设置镜像队列</p>
+<p><img src="/2022/04/08/rabbitmq-bi-ji/image-20220407213059056.png" alt="image-20220407213059056"></p>
+<p>此时某个节点故障则不会影响整个集群。</p>
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>无论是生产者还是消费者，只能连接一个RabbitMQ节点，而在我 们使用RabbitMQ集群时，如果只连接一个RabbitMQ节点，会造成 该节点的压力过大。我们需要平均的向每个RabbitMQ节点发送请 求，此时需要一个负载均衡工具帮助我们分发请求，接下来使用 Haproxy做负载均衡：</p>
+<p>1 安装Haproxy</p>
+<pre class=" language-bash"><code class="language-bash">yum -y <span class="token function">install</span> haproxy
+</code></pre>
+<p>2 配置Haproxy</p>
+<pre class=" language-bash"><code class="language-bash">vim /etc/haproxy/haproxy.cfg
+</code></pre>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 以下为修改内容</span>
+defaults
+ <span class="token comment" spellcheck="true"># 修改为tcp</span>
+ mode tcp
+<span class="token comment" spellcheck="true"># 以下为添加内容</span>
+listen rabbitmq_cluster
+ <span class="token comment" spellcheck="true"># 对外暴露端口</span>
+       bind 0.0.0.0:5672
+       mode tcp
+       balance roundrobin
+       <span class="token comment" spellcheck="true"># 代理RabbitMQ的端口</span>
+       server node1 127.0.0.1:5673 check inter 5000 rise 2 fall 2
+       server node2 127.0.0.1:5674 check inter 5000 rise 2 fall 2
+listen stats
+ <span class="token comment" spellcheck="true"># Haproxy控制台路径</span>
+       bind 192.168.0.162:8100
+       mode http
+       option httplog
+       stats <span class="token function">enable</span>
+       stats uri /rabbitmq-stats
+       stats refresh 5s
+</code></pre>
+<p>3 启动Haproxy    </p>
+<pre class=" language-bash"><code class="language-bash">haproxy -f /etc/haproxy/haproxy.cfg    
+</code></pre>
+<p>4 访问Haproxy控制台：<a target="_blank" rel="noopener" href="http://192.168.0.162:8100/rabbitmq-stats">http://192.168.0.162:8100/rabbitmq-stats</a></p>
+<p>5 生产者连接Haproxy发送消息</p>
+<pre class=" language-JAVA"><code class="language-JAVA">// 生产者
+public class Producer &#123;
+    public static void main(String[] args)
+throws IOException, TimeoutException &#123;
+        ConnectionFactory connectionFactory = newConnectionFactory();
+      
+        connectionFactory.setHost("192.168.0.162");
+        connectionFactory.setPort(5672);
+      
+        connectionFactory.setUsername("guest");
+      
+        connectionFactory.setPassword("guest");
+      
+        connectionFactory.setVirtualHost("/");
+        Connection conn = connectionFactory.newConnection();
+        Channel channel = conn.createChannel();
+      
+        channel.queueDeclare("simple_queue",false, false, false, null);
+        channel.basicPublish("","simple_queue", null,"hello!rabbitmq!".getBytes());
+        channel.close();
+        conn.close();
+   &#125;
+&#125;
+</code></pre>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">JueJue</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://zg-jian.github.io/2022/04/08/rabbitmq-bi-ji/">http://zg-jian.github.io/2022/04/08/rabbitmq-bi-ji/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">JueJue</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '7NFhD3OrhhYKm8uII0IYQzr8-gzGzoHsz',
+        appKey: 'uebYYTaY9LiGMshkU3IHEDBT',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '与君共勉！！'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/04/08/rabbitmq-wei-shi-me-shi-yong-xin-dao-er-bu-zhi-jie-shi-yong-tcp-lian-jie-tong-xin/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="RabbitMQ为什么使用信道而不直接使用TCP连接通信？">
+                        
+                        <span class="card-title">RabbitMQ为什么使用信道而不直接使用TCP连接通信？</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            TCP连接的创建和销毁开销大
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-08
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
+                                    中间件
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/01/zookeeper-bi-ji-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Zookeeper笔记2">
+                        
+                        <span class="card-title">Zookeeper笔记2</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            另一份Zookeeper笔记
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" class="post-category">
+                                    分布式
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('30')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Jue-Blog<br />'
+            + '文章作者: JueJue<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <a href="/about" target="_blank">JueJue</a>
+            |&nbsp;Powered by&nbsp;<a href="https://zg-jian.github.io" target="_blank">JueJue</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">65k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2022";
+                        var startMonth = "3";
+                        var startDate = "27";
+                        var startHour = "8";
+                        var startMinute = "25";
+                        var startSecond = "6";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/ZG-jian" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:2826022861@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2826022861" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2826022861" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
